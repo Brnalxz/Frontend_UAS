@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="forumApp">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forum Wuthering Waves</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- AngularJS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <!-- Custom Styles (optional) -->
+    <link rel="stylesheet" href="/Code/Forum/forumStyles.css">
+</head>
+
+<body ng-controller="ForumController" class="bg-dark text-white">
+
+    <!-- Header -->
+    <header class="py-3">
+        <div class="container text-center">
+            <h1 class="fw-bold">Forum Wuthering Waves</h1>
+        </div>
+    </header>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+    
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+    
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item" ng-class="{'active': currentTab === 'home'}">
+                        <a class="nav-link" href="../../index.html" ng-click="changeTab('home')">
+                            <i class="fa fa-home"></i>
+                            Home
+                        </a>
+                    </li>
+                    <li class="nav-item" ng-class="{'active': currentTab === 'resonators'}">
+                        <a class="nav-link" href="../Resonators/resonators.html" ng-click="changeTab('resonators')">
+                            <i class="fas fa-broadcast-tower"></i>
+                            Resonators
+                        </a>
+                    </li>
+                    <li class="nav-item" ng-class="{'active': currentTab === 'weapons'}">
+                        <a class="nav-link" href="../Weapons/weapons.html" ng-click="changeTab('weapons')">
+                            <i class="fa fa-book"></i>
+                            Weapons
+                        </a>
+                    </li>
+                    <li class="nav-item" ng-class="{'active': currentTab === 'echoes'}">
+                        <a class="nav-link" href="../Echoes/echoes.html" ng-click="changeTab('echoes')">
+                            <i class="fas fa-wave-square"></i>
+                            Echoes
+                        </a>
+                    </li>
+                    <li class="nav-item" ng-class="{'active': currentTab === 'forum'}">
+                        <a class="nav-link" href="../Forum/forum.html" ng-click="changeTab('forum')">
+                            <i class="fa fa-bell"></i>
+                            Forum
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Add Post Button -->
+    <div class="fixed-bottom m-4 text-end">
+        <button class="btn btn-primary rounded-circle" ng-click="showAddPostForm = true">
+            <i class="fas fa-plus"></i>
+        </button>
+    </div>
+
+    <!-- Posts Section -->
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-6 mb-4" ng-repeat="post in posts">
+                <div class="card bg-secondary text-white">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <div>
+                            <img ng-src="{{post.profilePic}}" class="rounded-circle me-2" width="30" alt="Profile Pic">
+                            <span class="fw-bold">{{post.username}}</span>
+                        </div>
+                        <div class="dropdown">
+                            <button class="btn btn-link text-white p-0" type="button" data-bs-toggle="dropdown">
+                                <i class="fas fa-ellipsis-v"></i>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
+                                <li><a class="dropdown-item" href="#" ng-click="deletePost($index)">Delete Post</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{post.title}}</h5>
+                        <img ng-if="post.image" ng-src="{{post.image}}" class="img-fluid mb-3" alt="Post Image">
+                        <p class="card-text">{{post.description}}</p>
+                    </div>
+                    <div class="card-footer d-flex justify-content-around">
+                        <span>{{post.likes}} <i class="fas fa-thumbs-up"></i></span>
+                        <span>{{post.dislikes}} <i class="fas fa-thumbs-down"></i></span>
+                        <span>{{post.comments}} <i class="fas fa-comment"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-3">
+        <div class="container">
+            <p>Thank you for visiting! Find us on social media for more updates.</p>
+            <ul class="list-inline">
+                <li class="list-inline-item"><a href="#" class="text-white"><i class="fab fa-facebook"></i></a></li>
+                <li class="list-inline-item"><a href="#" class="text-white"><i class="fab fa-whatsapp"></i></a></li>
+                <li class="list-inline-item"><a href="#" class="text-white"><i class="fab fa-instagram"></i></a></li>
+                <li class="list-inline-item"><a href="#" class="text-white"><i class="fab fa-youtube"></i></a></li>
+            </ul>
+            <p>&copy; 2024 SK Group</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap and AngularJS Scripts -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="forumScripts.js"></script>
+    <script>
+        // AngularJS Application
+        var app = angular.module('forumApp', []);
+
+        app.controller('ForumController', function ($scope) {
+            $scope.showAddPostForm = false;
+
+            // Sample posts array
+            $scope.posts = [
+                { username: 'ayamterbang096', profilePic: '/Images/Forum-Images/default-profile.png', title: 'Opinion on Xiangli Yao?', description: 'I honestly think...', likes: 121, dislikes: 14, comments: 23 },
+                { username: 'bebekhangat003', profilePic: '/Images/Forum-Images/default-profile.png', title: 'I Found the BEST build for Jinshi', description: 'Here\'s why...', likes: 14, dislikes: 8, comments: 5 },
+                // Add more posts here
+            ];
+
+            // Add new post
+            $scope.addPost = function () {
+                $scope.posts.push({
+                    username: 'newUser',  // Placeholder, replace with actual username
+                    profilePic: '/Images/Forum-Images/default-profile.png', // Placeholder
+                    title: $scope.newPost.title,
+                    description: $scope.newPost.description,
+                    likes: 0,
+                    dislikes: 0,
+                    comments: 0,
+                    image: $scope.newPost.image || null
+                });
+                $scope.newPost = {};
+                $scope.showAddPostForm = false;
+            };
+
+            // Delete a post
+            $scope.deletePost = function (index) {
+                $scope.posts.splice(index, 1);
+            };
+        });
+    </script>
+</body>
+
+</html>

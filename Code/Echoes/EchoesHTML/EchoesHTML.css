@@ -1,0 +1,135 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #1c1c2b;
+    color: white;
+}
+
+/* Back Button */
+.back-button {
+    position: relative;
+    background-color: #ffcc00;
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    top: 20px;
+    left: 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.back-button:hover {
+    background-color: #e6b800;
+}
+
+.back-button a {
+    text-decoration: none;
+    color: black;
+}
+
+.card {
+    max-width: 900px;
+    margin: 20px auto;
+    background-color: #252535;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.header .image img {
+    width: 100px;
+    height: 100px;
+}
+
+.header .info h1 {
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+
+.header .info .class, .header .info .cost {
+    font-size: 14px;
+    color: #64B2FF;
+}
+
+
+.rank-level {
+    margin-top: 10px;
+    display: flex;
+    gap: 20px;
+}
+
+/* Stats */
+.stats-section {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.stats-section .main-stats, .stats-section .sub-stats {
+    width: 45%;
+}
+
+.stats-section h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.stats-section ul {
+    list-style-type: none;
+}
+
+/* Ability */
+.ability-section {
+    background-color: #2d2d44;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.ability-section h2 {
+    font-size: 18px;
+}
+
+.ability-section p {
+    margin-top: 10px;
+    line-height: 1.5;
+}
+
+.highlight {
+    color: #f4d03f;
+}
+
+
+/* Sonata */
+.sonata-effect {
+    background-color: #2d2d44;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.sonata-effect ul {
+    list-style-type: none;
+    margin-top: 10px;
+}
+
+.sonata-effect li {
+    margin-bottom: 5px;
+}
+
+.sonata-img{
+    width: 50px;
+    vertical-align: middle;
+}

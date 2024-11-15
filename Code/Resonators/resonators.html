@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="resonatorApp">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resonators</title>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- AngularJS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+
+    <!-- Some styles -->
+    <style>
+        body {
+            background-color: #162938;
+            color: #ddd;
+        }
+
+        .card {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: column;
+            justify-content: space-between;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.2s;
+        }
+
+        .card-body {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+        }
+
+        .card-img-top {
+            height: 420px;
+            object-fit: cover;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .card-title {
+            background-color: rgba(204, 204, 204, 0.8);
+            /* border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px; */
+            border-radius: 10px;
+            margin-top: 5px;
+            padding: 10px;
+            width: 100%;
+            object-fit: cover;
+            text-align: center;
+        }
+
+        .btn-outline-light {
+            border-color: #5a9;
+            color: #5a9;
+        }
+
+        .btn-outline-light:hover {
+            background-color: #5a9;
+            color: #fff;
+        }
+
+        .btn-group{
+            flex-wrap: wrap;
+        }
+    </style>
+</head>
+
+<body ng-controller="ResonatorController">
+    <!-- Header -->
+    <header class="bg-dark text-white p-3">
+        <div class="container d-flex justify-content-between align-items-center">
+            <!-- <div class="hamburger d-block d-md-none">
+                <i class="fa fa-bars"></i>
+            </div> -->
+            <h1 class="m-0">Resonators</h1>
+        </div>
+    </header>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item" ng-class="{'active': currentTab === 'home'}">
+                        <a class="nav-link" href="../../index.html" ng-click="changeTab('home')">
+                            <i class="fa fa-home"></i>
+                            Home
+                        </a>
+                    </li>
+                    <li class="nav-item" ng-class="{'active': currentTab === 'resonators'}">
+                        <a class="nav-link" href="../Resonators/resonators.html" ng-click="changeTab('resonators')">
+                            <i class="fas fa-broadcast-tower"></i>
+                            Resonators
+                        </a>
+                    </li>
+                    <li class="nav-item" ng-class="{'active': currentTab === 'weapons'}">
+                        <a class="nav-link" href="../Weapons/weapons.html" ng-click="changeTab('weapons')">
+                            <i class="fa fa-book"></i>
+                            Weapons
+                        </a>
+                    </li>
+                    <li class="nav-item" ng-class="{'active': currentTab === 'echoes'}">
+                        <a class="nav-link" href="../Echoes/echoes.html" ng-click="changeTab('echoes')">
+                            <i class="fas fa-wave-square"></i>
+                            Echoes
+                        </a>
+                    </li>
+                    <li class="nav-item" ng-class="{'active': currentTab === 'forum'}">
+                        <a class="nav-link" href="../Forum/forum.html" ng-click="changeTab('forum')">
+                            <i class="fa fa-bell"></i>
+                            Forum
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container my-5">
+        <div class="mb-4">
+            <!-- Search Section -->
+            <h5 class="text-white mb-3">Search Resonators</h5>
+            <div class="input-group mb-3 search-bar">
+                <input type="text" class="form-control" placeholder="Search resonator..." ng-model="searchQuery">
+                <button class="btn btn-primary" type="button">
+                    <i class="fa fa-search"></i>
+                </button>
+            </div>
+    
+            <!-- Categories Section -->
+            <div class="btn-group categories" role="group">
+                <button type="button" class="btn btn-outline-light" ng-click="filterCategory('all')">Show All</button>
+                <button type="button" class="btn btn-outline-light" ng-click="filterCategory('sword')">Sword</button>
+                <button type="button" class="btn btn-outline-light" ng-click="filterCategory('gauntlet')">Gauntlet</button>
+                <button type="button" class="btn btn-outline-light" ng-click="filterCategory('broadblade')">Broadblade</button>
+                <button type="button" class="btn btn-outline-light" ng-click="filterCategory('pistols')">Pistols</button>
+                <button type="button" class="btn btn-outline-light" ng-click="filterCategory('rectifier')">Rectifier</button>
+            </div>
+        </div>
+    
+        <!-- Character Cards -->
+        <div class="row g-4">
+            <div class="col-md-4 col-lg-3" ng-repeat="character in characters | filter:searchQuery | filter:categoryFilter">
+                <div class="card" ng-style="{'background-color': character.bgColor == '#d4af37' ? '#FFD700' : '#8A2BE2'}">
+                    <img ng-src="{{character.img}}" class="card-img-top" alt="{{character.name}}">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">{{character.name}}</h5>
+                        <p class="card-text">{{character.type}}</p>
+                        <a href="{{character.link}}" class="stretched-link"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-3">
+        <div class="container">
+            <p>Thank you for visiting! Find us on social media for more updates.</p>
+            <ul class="list-inline">
+                <li class="list-inline-item"><a href="#" class="text-white"><i class="fab fa-facebook"></i></a></li>
+                <li class="list-inline-item"><a href="#" class="text-white"><i class="fab fa-whatsapp"></i></a></li>
+                <li class="list-inline-item"><a href="#" class="text-white"><i class="fab fa-instagram"></i></a></li>
+                <li class="list-inline-item"><a href="#" class="text-white"><i class="fab fa-youtube"></i></a></li>
+            </ul>
+            <p>&copy; 2024 SK Group</p>
+        </div>
+    </footer>
+
+    <script>
+        angular.module('resonatorApp', []).controller('ResonatorController', function ($scope) {
+            $scope.searchQuery = '';
+            $scope.currentCategory = 'all';
+
+            $scope.characters = [
+                { name: 'Xiangli Yao', category: 'Electro', img: '/Images/Resonators/Xiangli Yao-removebg-preview.png', link: '/ResonatorHTML/Xiangli_Yao.html', bgColor: '#d4af37' },
+                { name: 'Changli', category: 'Fusion', img: '/Images/Resonators/Changli-removebg-preview.png', link: '/ResonatorHTML/Changli.html', bgColor: '#d4af37' },
+                { name: 'Jinshi', category: 'Spectro', img: '/Images/Resonators/Jinshi-removebg-preview.png', link: '/ResonatorHTML/Jinshi.html', bgColor: '#d4af37' },
+                { name: 'Yuan Wu', category: 'Electro', img: '/Images/Resonators/Yuanwu-removebg-preview.png', link: '/ResonatorHTML/Yuanwu.html', bgColor: 'purple' },
+                { name: 'Yinlin', category: 'Electro', img: '/Images/Resonators/Yinlin-removebg-preview.png', link: '',bgColor: '#d4af37' },
+                { name: 'Male Rover', category: 'Spectro', img: '/Images/Resonators/MaleRover-removebg-preview.png', link: '', bgColor: '#d4af37' },
+                { name: 'Baizhi', category: 'Glacio', img: '/Images/Resonators/Baizi-removebg-preview.png', link: '/ResonatorHTML/Baizhi.html', bgColor: 'purple' },
+                { name: 'Taoqi', category: 'Havoc', img: '/Images/Resonators/Taoqi-removebg-preview.png', link: '', bgColor: 'purple' },
+                { name: 'Jiyan', category: 'Aero', img: '/Images/Resonators/Jiyan-removebg-preview.png', link: '', bgColor: '#d4af37' },
+                { name: 'Calcharo', category: 'Electro', img: '/Images/Resonators/Chalcaro-removebg-preview.png', link: '', bgColor: '#d4af37' },
+                { name: 'Mortefi', category: 'Fusion', img: '/Images/Resonators/Mortefi-removebg-preview.png', link: '', bgColor: 'purple' }
+            ];
+            
+            $scope.filterCategory = function (category) {
+                $scope.currentCategory = category;
+                $scope.categoryFilter = category === 'all' ? '' : { category: category };
+            };
+        });
+    </script>
+
+    <!-- Bootstrap 5 JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

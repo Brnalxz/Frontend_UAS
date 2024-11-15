@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="mainApp">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Page</title>
+
+    <!-- Bootstrap 5 CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- AngularJS CDN -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="navbarStyles.css">
+    <link rel="stylesheet" href="headerFooterStyles.css">
+    <style>
+        body {
+            background-color: #162938;
+            color: #ddd;
+        }
+        
+        .carousel-control-prev-icon,
+        .carousel-control-next-icon {
+            color: #ffffff;
+            border-radius: 20%;
+        }
+
+        .carousel-control-prev:hover,
+        .carousel-control-next:hover {
+            opacity: 0.7;
+        }
+    </style>
+</head>
+
+<body class="body-home" ng-controller="MainController">
+    <header class="bg-dark text-white p-3">
+        <div class="container d-flex justify-content-between align-items-center">
+            <button class="btn btn-outline-light d-lg-none" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+            <h1 class="h4 m-0">Wuthering Waves</h1>
+            <a href="../login.html">
+                <button class="btn btn-light" id="loginBtn">Login</button>
+            </a>
+        </div>
+    </header>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top px-2">
+        <div class="container">
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item" ng-class="{'active': currentTab === 'home'}">
+                        <a class="nav-link" href="#" ng-click="changeTab('home')">
+                            <i class="fa fa-home"></i> 
+                            Home
+                        </a>
+                    </li>
+                    <li class="nav-item" ng-class="{'active': currentTab === 'resonators'}">
+                        <a class="nav-link" href="Code/Resonators/resonators.html" ng-click="changeTab('resonators')">
+                            <i class="fas fa-broadcast-tower"></i> 
+                            Resonators
+                        </a>
+                    </li>
+                    <li class="nav-item" ng-class="{'active': currentTab === 'weapons'}">
+                        <a class="nav-link" href="Code/Weapons/weapons.html" ng-click="changeTab('weapons')">
+                            <i class="fa fa-book"></i>
+                            Weapons
+                        </a>
+                    </li>
+                    <li class="nav-item" ng-class="{'active': currentTab === 'echoes'}">
+                        <a class="nav-link" href="Code/Echoes/echoes.html" ng-click="changeTab('echoes')">
+                            <i class="fas fa-wave-square"></i>
+                            Echoes
+                        </a>
+                    </li>
+                    <li class="nav-item" ng-class="{'active': currentTab === 'forum'}">
+                        <a class="nav-link" href="Code/Forum/forum.html" ng-click="changeTab('forum')">
+                            <i class="fa fa-bell"></i>
+                            Forum
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container my-4" ng-switch="currentTab">
+        <!-- Home Tab -->
+        <div ng-switch-when="home">
+            <h2>News</h2>
+            <div id="newsCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
+                <!-- Carousel Indicators -->
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active" aria-current="true"
+                        aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                </div>
+                
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="Images/Home-Images/home-news-1.avif" class="d-block w-100" alt="News 1">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>On Going Banner this version..</h5>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="Images/Home-Images/home-news-2.jpg" class="d-block w-100" alt="News 2">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>MT. Fimament Explained..!!</h5>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="Images/Home-Images/home-news-3.jpg" class="d-block w-100" alt="News 3">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>Free supplies in next update???</h5>
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#newsCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#newsCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+
+            <h2 class="mt-4">Current Banner</h2>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <div class="card">
+                        <img src="Images/Home-Images/zhezhi-intro.jpg" class="card-img-top" alt="Event 2 Banner">
+                        <div class="card-body">
+                            <h5 class="card-title">Event 1: Chromatic Prose</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <div class="card">
+                        <img src="Images/Home-Images/xiangli-yao-intro.jpg" class="card-img-top" alt="Event 1 Banner">
+                        <div class="card-body">
+                            <h5 class="card-title">Event 2: Celestial Revelation</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile Tab -->
+        <div ng-switch-when="profile">
+            <h2>My Profile</h2>
+            <div class="d-flex align-items-center">
+                <img src="Images/Resonators/Changli-removebg-preview.png" alt="Profile Photo"
+                    class="rounded-circle me-3" width="100">
+                <div>
+                    <p><strong>Nama Pengguna:</strong> Pi</p>
+                    <p><strong>Username:</strong> FallenSKy51</p>
+                    <p><strong>Email:</strong> email@contoh.com</p>
+                    <p><strong>Lokasi:</strong> Jakarta, Indonesia</p>
+                    <p><strong>Tanggal Bergabung:</strong> 1 Januari 2022</p>
+                    <textarea id="bio" rows="4" class="form-control" placeholder="Cuman Main Changli."></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-3 mt-4">
+        <div>
+            <p>Thank you for visiting! Find us on social media for more updates.</p>
+            <ul class="list-inline">
+                <li class="list-inline-item"><a href="#" class="text-white"><i class="fab fa-facebook"></i></a></li>
+                <li class="list-inline-item"><a href="#" class="text-white"><i class="fab fa-whatsapp"></i></a></li>
+                <li class="list-inline-item"><a href="#" class="text-white"><i class="fab fa-instagram"></i></a></li>
+                <li class="list-inline-item"><a href="#" class="text-white"><i class="fab fa-youtube"></i></a></li>
+            </ul>
+        </div>
+        <p>&copy; 2024 SK Group</p>
+    </footer>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- AngularJS Controller -->
+    <script>
+        angular.module('mainApp', []).controller('MainController', ['$scope', function ($scope) {
+            $scope.currentTab = 'home';
+            $scope.changeTab = function (tab) {
+                $scope.currentTab = tab;
+            };
+        }]);
+    </script>
+</body>
+
+</html>
