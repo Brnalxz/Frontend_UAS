@@ -144,10 +144,26 @@
         <!-- Category Buttons -->
         <div class="d-flex justify-content-start mb-3">
             <div class="btn-group categories" role="group">
-                <button type="button" class="btn btn-outline-light" ng-click="filterCategory('all')">Show All</button>
-                <button type="button" class="btn btn-outline-light" ng-click="filterCategory('cost4')">Cost 4</button>
-                <button type="button" class="btn btn-outline-light" ng-click="filterCategory('cost3')">Cost 3</button>
-                <button type="button" class="btn btn-outline-light" ng-click="filterCategory('cost1')">Cost 1</button>
+                <button type="button" class="btn btn-outline-light" 
+                    ng-class="{'btn-success text-white': currentCategory === 'all'}"
+                    ng-click="filterCategory('all')">
+                    Show All
+                </button>
+                <button type="button" class="btn btn-outline-light" 
+                    ng-class="{'btn-success text-white': currentCategory === 'cost4'}"
+                    ng-click="filterCategory('cost4')">
+                    Cost 4
+                </button>
+                <button type="button" class="btn btn-outline-light" 
+                    ng-class="{'btn-success text-white': currentCategory === 'cost3'}"
+                    ng-click="filterCategory('cost3')">
+                    Cost 3
+                </button>
+                <button type="button" class="btn btn-outline-light" 
+                    ng-class="{'btn-success text-white': currentCategory === 'cost1'}"
+                    ng-click="filterCategory('cost1')">
+                    Cost 1
+                </button>
             </div>
         </div>
     </div>

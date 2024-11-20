@@ -147,13 +147,43 @@
     
             <!-- Categories Section -->
             <div class="btn-group categories" role="group">
-                <button type="button" class="btn btn-outline-light" ng-click="filterCategory('all')">Show All</button>
-                <button type="button" class="btn btn-outline-light" ng-click="filterCategory('sword')">Sword</button>
-                <button type="button" class="btn btn-outline-light" ng-click="filterCategory('gauntlet')">Gauntlet</button>
-                <button type="button" class="btn btn-outline-light" ng-click="filterCategory('broadblade')">Broadblade</button>
-                <button type="button" class="btn btn-outline-light" ng-click="filterCategory('pistols')">Pistols</button>
-                <button type="button" class="btn btn-outline-light" ng-click="filterCategory('rectifier')">Rectifier</button>
+                <button type="button" class="btn btn-outline-light" 
+                    ng-class="{'btn-success text-white': currentCategory === 'all'}"
+                    ng-click="filterCategory('all')">
+                    Show All
+                </button>
+                <button type="button" class="btn btn-outline-light"
+                    ng-class="{'btn-success text-white': currentCategory === 'Fusion'}"
+                    ng-click="filterCategory('Fusion')">
+                    Fusion
+                </button>
+                <button type="button" class="btn btn-outline-light"
+                    ng-class="{'btn-success text-white': currentCategory === 'Electro'}"
+                    ng-click="filterCategory('Electro')">
+                    Electro
+                </button>
+                <button type="button" class="btn btn-outline-light"
+                    ng-class="{'btn-success text-white': currentCategory === 'Spectro'}"
+                    ng-click="filterCategory('Spectro')">
+                    Spectro
+                </button>
+                <button type="button" class="btn btn-outline-light"
+                    ng-class="{'btn-success text-white': currentCategory === 'Aero'}"
+                    ng-click="filterCategory('Aero')">
+                    Aero
+                </button>
+                <button type="button" class="btn btn-outline-light"
+                    ng-class="{'btn-success text-white': currentCategory === 'Glacio'}"
+                    ng-click="filterCategory('Glacio')">
+                    Glacio
+                </button>
+                <button type="button" class="btn btn-outline-light"
+                    ng-class="{'btn-success text-white': currentCategory === 'Havoc'}"
+                    ng-click="filterCategory('Havoc')">
+                    Havoc
+                </button>
             </div>
+
         </div>
     
         <!-- Character Cards -->
