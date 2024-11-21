@@ -1,0 +1,4 @@
+# MongoDB
+/node_modules
+
+.env
