@@ -1,80 +1,140 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inferno Rider Stats</title>
-    <link rel="stylesheet" href="/Code/Echoes/EchoesHTML/EchoesHTML.css">
-</head>
-<body>
-    <!-- Back Button -->
-    <a href="/Code/Echoes/echoes.html">
-        <button class="back-button">
-            BACK
-        </button>
-    </a>
+<html lang="en" ng-app="infernoApp">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Inferno Rider Stats</title>
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+        <!-- AngularJS -->
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+        <style>
+            body {
+                background-color: #1c1c2b;
+                color: white;
+            }
 
-    <div class="card">
-        <header class="header">
-            <div class="image">
-                <img src="/Images/Echo/infernorider.png" alt="Inferno Rider">
-            </div>
-            <div class="info">
-                <h1>Inferno Rider</h1>
-                <p class="class">Overlord Class</p>
-                <p class="cost">Cost: 4</p>
-                <div class="rank-level">
-                    <div>Rank: 4</div>
-                    <div>Level: 25</div>
+            .card {
+                background-color: #252535;
+            }
+
+            .highlight {
+                color: #f4d03f;
+            }
+        </style>
+    </head>
+
+    <body ng-controller="InfernoController">
+
+        <!-- Back Button -->
+        <div class="container my-3">
+            <a href="/views/Code/Echoes/echoes.html" class="btn btn-warning">BACK</a>
+        </div>
+
+        <!-- Card -->
+        <div class="container">
+            <div class="card p-4 rounded-4">
+                <div class="row align-items-center mb-4">
+                    <div class="col-auto">
+                        <img ng-src="{{data.image}}" alt="Inferno Rider" class="img-fluid rounded-circle"
+                            style="width: 100px; height: 100px;">
+                    </div>
+                    <div class="col">
+                        <h1>{{data.name}}</h1>
+                        <p class="text-info mb-1">{{data.class}}</p>
+                        <p class="text-info mb-1">Cost: {{data.cost}}</p>
+                        <div class="d-flex gap-4">
+                            <div>Rank: {{data.rank}}</div>
+                            <div>Level: {{data.level}}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stats Section -->
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <h2 class="h5">All Possible Main Stats</h2>
+                        <ul class="list-unstyled">
+                            <li ng-repeat="stat in data.mainStats">{{stat}}</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h2 class="h5">Sub-Stats Ranges</h2>
+                        <ul class="list-unstyled">
+                            <li ng-repeat="subStat in data.subStats">{{subStat}}</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Ability Section -->
+                <div class="mb-4 p-3 rounded" style="background-color: #2d2d44;">
+                    <h2 class="h5">Echo Ability</h2>
+                    <p><strong>Rank {{data.ability.rank}}</strong></p>
+                    <p>{{data.ability.description}}</p>
+                </div>
+
+                <!-- Sonata Section -->
+                <div class="p-3 rounded" style="background-color: #2d2d44;">
+                    <h2 class="h5">Possible Sonata Effect</h2>
+                    <div class="d-flex align-items-center">
+                        <img ng-src="{{data.sonata.image}}" alt="Sonata" class="me-2" style="width: 50px;">
+                        <strong>{{data.sonata.name}}</strong>
+                    </div>
+                    <ul class="list-unstyled mt-2">
+                        <li ng-repeat="effect in data.sonata.effects">{{effect}}</li>
+                    </ul>
                 </div>
             </div>
-        </header>
-
-        <div class="stats-section">
-            <div class="main-stats">
-                <h2>All Possible Main Stats</h2>
-                <ul>
-                    <li>ATK (Default)</li>
-                    <li>ATK %</li>
-                    <li>HP %</li>
-                    <li>DEF %</li>
-                    <li>Crit. Rate</li>
-                    <li>Crit. DMG</li>
-                    <li>Healing Bonus</li>
-                </ul>
-            </div>
-
-            <div class="sub-stats">
-                <h2>Sub-Stats Ranges</h2>
-                <ul>
-                    <li>HP: 320 - 580</li>
-                    <li>ATK: 30 - 70</li>
-                    <li>DEF: 30 - 70</li>
-                    <li>HP %: 6.4% - 11.6%</li>
-                    <li>Crit. Rate: 6.3% - 10.5%</li>
-                    <li>Energy Regen: 5.6% - 14.9%</li>
-                </ul>
-            </div>
         </div>
 
-        <div class="ability-section">
-            <h2>Echo Ability</h2>
-            <p><strong>Rank 5</strong></p>
-            <p>Transform into the Inferno Rider to launch up to 3 consecutive slashes in a row, each slash dealing <span class="highlight">242.40%</span>, <span class="highlight">282.80%</span>, and <span class="highlight">282.80%</span> 
-                Fusion DMG respectively. After the final hit, increase the current Resonator's Fusion DMG by <span class="highlight">12.00%</span> and Basic Attack DMG by <span class="highlight">12.00%</span> for 15s.
-                Long press the Echo Skill to transform into the Inferno Rider and enter Riding Mode. When exiting Riding Mode, deal <span class="highlight">282.80%</span> Fusion DMG to enemies in front. CD: 20s</p>
-        </div>
-
-        <div class="sonata-effect">
-            <h2>Possible Sonata Effect</h2>
-            <p>
-                <img class="sonata-img" src="/Images/Resonators/elementLogo/fusion.png">
-                <strong>Molten Rift</strong></p>
-            <ul>
-                <li>2 Set: Fusion DMG +10%</li>
-                <li>5 Set: Fusion DMG +30% for 15s after releasing Resonance Skill</li>
-            </ul>
-        </div>
-    </div>
-</body>
+        <!-- Bootstrap JS -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- AngularJS Controller -->
+        <script>
+            const app = angular.module('infernoApp', []);
+            app.controller('InfernoController', function ($scope) {
+                $scope.data = {
+                    image: "/views/Images/Echo/infernorider.png",
+                    name: "Inferno Rider",
+                    class: "Overlord Class",
+                    cost: 4,
+                    rank: 4,
+                    level: 25,
+                    mainStats: [
+                        "ATK (Default)",
+                        "ATK %",
+                        "HP %",
+                        "DEF %",
+                        "Crit. Rate",
+                        "Crit. DMG",
+                        "Healing Bonus",
+                    ],
+                    subStats: [
+                        "HP             : 320 - 580",
+                        "ATK            : 30 - 70",
+                        "DEF            : 30 - 70",
+                        "HP %           : 6.4% - 11.6%",
+                        "Crit. Rate     : 6.3% - 10.5%",
+                        "Energy Regen   : 5.6% - 14.9%",
+                    ],
+                    ability: {
+                        rank: 5,
+                        description: "Transform into the Inferno Rider to launch up to 3 consecutive slashes in a row, each slash dealing " +
+                            "242.40%, 282.80%, and 282.80% " +
+                            "Fusion DMG respectively. After the final hit, increase the current Resonator's Fusion DMG by 12.00% " +
+                            "and Basic Attack DMG by 12.00% for 15s. Long press the Echo Skill to transform into the Inferno Rider and enter Riding Mode. " +
+                            "When exiting Riding Mode, deal 282.80% Fusion DMG to enemies in front. CD: 20s"
+                    },
+                    sonata: {
+                        image: "/views/Images/Resonators/elementLogo/fusion.png",
+                        name: "Molten Rift",
+                        effects: [
+                            "2 Set: Fusion DMG +10%",
+                            "5 Set: Fusion DMG +30% for 15s after releasing Resonance Skill",   
+                        ]
+                    }
+                };
+            });
+        </script>
+    </body>
 </html>

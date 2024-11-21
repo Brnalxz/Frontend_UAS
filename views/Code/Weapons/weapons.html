@@ -58,7 +58,7 @@
     </header>
 
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top bg-dark">
         <div class="container">
             
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -107,7 +107,7 @@
     <div class="container weapons-section my-5">
         <div class="mb-4">
         <!-- Search Section -->
-        <h5 class="text-white mb-3">Search Resonators</h5>
+        <h5 class="text-white mb-3">Search Weapons</h5>
         <div class="input-group mb-3 search-bar">
             <input type="text" class="form-control" placeholder="Search weapon..." ng-model="searchQuery">
             <button class="btn btn-primary" type="button">
@@ -184,11 +184,11 @@
             $scope.currentCategory = 'all';
 
             $scope.weapons = [
-                { name: "Verity's Handle", image: "/views/Images/Weapon-Images/Verity'sHandle.png", link: "/WeaponHTML/Verity'sHandle.html", category: 'gauntlets' },
-                { name: "Lustrous Razor", image: "/views/Images/Weapon-Images/LustrousRazor.png", link: "/WeaponHTML/LustrousRazor.html", category: 'broadblade' },
-                { name: "Blazing Brilliance", image: "/views/Images/Weapon-Images/BlazingBrilliance.png", link: "/WeaponHTML/BlazingBrilliance.html", category: 'sword' },
-                { name: "Nova Burst", image: "/views/Images/Weapon-Images/NovaBurst.png", link: "/WeaponHTML/NovaBurst.html", category: 'pistols' },
-                { name: "Rectifier#25", image: "/views/Images/Weapon-Images/Rectifier25.png", link: "/WeaponHTML/Rectifier25.html", category: 'rectifier' }
+                { name: "Verity's Handle", image: "/views/Images/Weapon-Images/Verity'sHandle.png", link: "/views/code/Weapons/WeaponHTML/Verity'sHandle.html", category: 'gauntlets' },
+                { name: "Lustrous Razor", image: "/views/Images/Weapon-Images/LustrousRazor.png", link: "/views/code/Weapons/WeaponHTML/LustrousRazor.html", category: 'broadblade' },
+                { name: "Blazing Brilliance", image: "/views/Images/Weapon-Images/BlazingBrilliance.png", link: "/views/code/Weapons/WeaponHTML/BlazingBrilliance.html", category: 'sword' },
+                { name: "Nova Burst", image: "/views/Images/Weapon-Images/NovaBurst.png", link: "/views/code/Weapons/WeaponHTML/NovaBurst.html", category: 'pistols' },
+                { name: "Rectifier#25", image: "/views/Images/Weapon-Images/Rectifier25.png", link: "/views/code/Weapons/WeaponHTML/Rectifier25.html", category: 'rectifier' }
             ];
 
             $scope.filterCategory = function (category) {
