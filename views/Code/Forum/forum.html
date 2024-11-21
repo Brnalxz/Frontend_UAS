@@ -70,12 +70,49 @@
         </div>
     </nav>
 
-    <!-- Add Post Button -->
-    <div class="fixed-bottom m-4 text-end">
-        <button class="btn btn-primary rounded-circle" ng-click="showAddPostForm = true">
-            <i class="fas fa-plus"></i>
-        </button>
+<!-- Add Post Button -->
+<div class="fixed-bottom m-4 text-end">
+    <button class="btn btn-primary rounded-circle" ng-click="toggleAddPostForm()">
+        <i class="fas fa-plus"></i>
+    </button>
+</div>
+
+<!-- Add Post Modal -->
+<div class="modal" tabindex="-1" role="dialog" ng-show="showAddPostForm">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content bg-dark text-white">
+            <div class="modal-header">
+                <h5 class="modal-title">Add New Post</h5>
+                <button type="button" class="btn-close btn-close-white" aria-label="Close"
+                    ng-click="toggleAddPostForm()"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="postTitle" class="form-label">Post Title</label>
+                        <input type="text" id="postTitle" class="form-control" ng-model="newPost.title"
+                            placeholder="Enter post title">
+                    </div>
+                    <div class="mb-3">
+                        <label for="postDescription" class="form-label">Description</label>
+                        <textarea id="postDescription" class="form-control" ng-model="newPost.description" rows="4"
+                            placeholder="Enter post description"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="postImage" class="form-label">Image URL (Optional)</label>
+                        <input type="text" id="postImage" class="form-control" ng-model="newPost.image"
+                            placeholder="Enter image URL">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" ng-click="toggleAddPostForm()">Cancel</button>
+                <button type="button" class="btn btn-primary" ng-click="addPost()">Add Post</button>
+            </div>
+        </div>
     </div>
+</div>
+
 
     <!-- Posts Section -->
     <div class="container mt-4">
@@ -102,7 +139,7 @@
                         <img ng-if="post.image" ng-src="{{post.image}}" class="img-fluid mb-3" alt="Post Image">
                         <p class="card-text">{{post.description}}</p>
                     </div>
-                    <div class="card-footer d-flex justify-content-around">
+                    <div class="card-footer d-flex justify-content-end gap-3">
                         <span>{{post.likes}} <i class="fas fa-thumbs-up"></i></span>
                         <span>{{post.dislikes}} <i class="fas fa-thumbs-down"></i></span>
                         <span>{{post.comments}} <i class="fas fa-comment"></i></span>
@@ -112,7 +149,7 @@
         </div>
     </div>
 
-    <!-- Footer -->
+    <!-- Footer Test Again 6 -->
     <footer class="bg-dark text-white text-center py-3">
         <div class="container">
             <p>Thank you for visiting! Find us on social media for more updates.</p>
@@ -132,38 +169,57 @@
     <!-- AngularJS -->
     <script>
         var app = angular.module('forumApp', []);
-        app.controller('ForumController', function ($scope) {
-            $scope.currentTab = 'forum';
-            $scope.changeTab = function (tab) {
-                $scope.currentTab = tab;
+        app.controller('ForumController', function ($scope, $http) {
+        $scope.currentTab = 'forum';
+        $scope.posts = [];
+        $scope.newPost = {};
+        $scope.showAddPostForm = false;
+
+        // Load posts from backend
+        function loadPosts() {
+            $http.get('http://localhost:3000/posts').then((response) => {
+                $scope.posts = response.data;
+            }).catch((error) => {
+                console.error("Error loading posts:", error);
+            });
+        }
+
+        // Toggle Add Post Form
+        $scope.toggleAddPostForm = function () {
+            $scope.showAddPostForm = !$scope.showAddPostForm;
+        };
+
+        // Add a new post
+        $scope.addPost = function () {
+            const postData = {
+                title: $scope.newPost.title,
+                description: $scope.newPost.description,
+                image: $scope.newPost.image || null
             };
 
-            $scope.posts = [
-                { username: 'ayamterbang096', profilePic: '/Images/Forum-Images/default-profile.png', title: 'Opinion on Xiangli Yao?', description: 'I honestly think...', likes: 121, dislikes: 14, comments: 23 },
-                { username: 'bebekhangat003', profilePic: '/Images/Forum-Images/default-profile.png', title: 'I Found the BEST build for Jinshi', description: 'Here\'s why...', likes: 14, dislikes: 8, comments: 5 },
-                { username: 'brbro', profilePic: '/Images/Forum-Images/default-profile.png', title: 'I . U', description: 'Blablabla...', likes: 0, dislikes: 0, comments: 0 }
-            ];
+            $http.post('http://localhost:3000/posts', postData).then((response) => {
+                loadPosts(); // Refresh posts after adding
+                $scope.newPost = {}; // Reset form fields
+                $scope.showAddPostForm = false; // Close modal
+            }).catch((error) => {
+                console.error("Error adding post:", error);
+            });
+        };
 
-            $scope.newPost = {};
-            $scope.addPost = function () {
-                $scope.posts.push({
-                    username: 'newUser',
-                    profilePic: '/Images/Forum-Images/default-profile.png',
-                    title: $scope.newPost.title,
-                    description: $scope.newPost.description,
-                    likes: 0,
-                    dislikes: 0,
-                    comments: 0,
-                    image: $scope.newPost.image || null
-                });
-                $scope.newPost = {};
-                $scope.showAddPostForm = false;
-            };
+        // Delete a post
+        $scope.deletePost = function (id) {
+            $http.delete(`http://localhost:3000/posts/${id}`).then((response) => {
+                loadPosts();
+            }).catch((error) => {
+                console.error("Error deleting post:", error);
+            });
+        };
 
-            $scope.deletePost = function (index) {
-                $scope.posts.splice(index, 1);
-            };
-        });
+        // Initialize posts
+        loadPosts();
+    });
+        </script>
+
     </script>
 </body>
 
