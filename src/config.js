@@ -5,20 +5,31 @@ connect.then(()=> {
     console.log("database connected");
 });
 
-const LoginSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema({
+    username: {
+        type: String,
+        required: true,
+        unique: true, // Username harus unik
+        trim: true
+    },
     email: {
         type: String,
-        required: [true, 'Email is required.'],
+        required: true,
         unique: true,
-        match: [/^\S+@\S+\.\S+$/, 'Please use a valid email address.']
+        match: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, // Validasi email
     },
     password: {
         type: String,
-        required: [true, 'Password is required.']
-    }
+        required: true,
+        minlength: 6, // Panjang minimum password
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now, // Waktu pendaftaran
+    },
 });
 
-
-const collection = new mongoose.model("users", LoginSchema);
+// Model User
+const collection = mongoose.model('User', userSchema);
 
 module.exports = collection;

@@ -36,19 +36,28 @@ app.get('/weapon', (req,res) => {
 // Endpoint Signup
 app.post('/signup', async (req, res) => {
     try {
-        const { email, password } = req.body;
+        const { username, email, password } = req.body;
 
-        if (!email || !password) {
+        if (!username || !email || !password) {
             return res.status(400).send('All fields are required.');
         }
 
         const existingUser = await collection.findOne({ email });
         if (existingUser) {
-            return res.status(400).send('User already exists. Please log in.');
+            return res.status(400).send('Email is already in use. Please log in.');
+        }
+
+        const existingUsername = await collection.findOne({ username });
+        if (existingUsername) {
+            return res.status(400).send('Username is already taken.');
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
-        const newUser = new collection({ email, password: hashedPassword });
+        const newUser = new collection({
+            username,
+            email,
+            password: hashedPassword
+        });
         await newUser.save();
 
         res.status(201).send('User created successfully!');

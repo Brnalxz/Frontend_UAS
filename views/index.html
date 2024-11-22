@@ -94,6 +94,10 @@
                         <div class="tab-pane fade" id="signup" role="tabpanel" aria-labelledby="signup-tab">
                             <form ng-submit="submitSignup()" novalidate>
                                 <div class="mb-3">
+                                    <label for="signupName" class="form-label">Username</label>
+                                    <input type="text" id="signupName" name="username" ng-model="signupData.username" class="form-control" placeholder="Enter Username" required>
+                                </div>
+                                <div class="mb-3">
                                     <label for="signupEmail" class="form-label">Email</label>
                                     <input type="email" id="signupEmail" name="email" ng-model="signupData.email" class="form-control" placeholder="Enter email" required>
                                 </div>
@@ -261,57 +265,56 @@ angular.module('mainApp', []).controller('MainController', ['$scope', '$http', f
     $scope.loginData = {};
     $scope.signupData = {};
 
-    // Fungsi untuk login
-    $scope.isLoggedIn = false; // Default: pengguna belum login
-
-$scope.submitLogin = function () {
-    if ($scope.loginData.email && $scope.loginData.password) {
-        $http.post('/login', $scope.loginData)
-            .then(function (response) {
-                alert('Login Successful!');
-                const modal = bootstrap.Modal.getInstance(document.getElementById('loginModal'));
-                modal.hide();
-                $scope.loginData = {}; // Reset form
-
-                $scope.isLoggedIn = true; // Set status login ke true
-                localStorage.setItem('user', JSON.stringify({ email: $scope.loginData.email }));
-            })
-            .catch(function (error) {
-                alert('Login Failed. Please try again.');
-            });
-    } else {
-        alert('Email and password are required!');
+    // Check if user is already logged in
+    $scope.isLoggedIn = false;
+    const storedUser = JSON.parse(localStorage.getItem('user'));
+    if (storedUser) {
+        $scope.isLoggedIn = true; // Set login state from local storage
+        $scope.loggedInUser = storedUser;
     }
-};
 
-$scope.logout = function () {
-    $scope.isLoggedIn = false; // Set status login ke false
-    localStorage.removeItem('user'); // Hapus informasi pengguna dari localStorage
-    alert('You have logged out.');
-};
+    $scope.submitLogin = function () {
+        if ($scope.loginData.email && $scope.loginData.password) {
+            $http.post('/login', $scope.loginData)
+                .then(function (response) {
+                    alert('Login Successful!');
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('loginModal'));
+                    modal.hide();
+                    $scope.loginData = {}; // Reset form
+                    $scope.isLoggedIn = true; // Set login state to true
+                    localStorage.setItem('user', JSON.stringify({ email: $scope.loginData.email }));
+                })
+                .catch(function (error) {
+                    alert('Login Failed. Please try again.');
+                });
+        } else {
+            alert('Email and password are required!');
+        }
+    };
 
+    $scope.logout = function () {
+        localStorage.removeItem('user');
+        $scope.isLoggedIn = false;
+        alert('You are Logout')
+    };
 
-    // Fungsi untuk signup
     $scope.submitSignup = function () {
-    if (!$scope.signupData.email || !$scope.signupData.password) {
-        alert('All fields are required!');
-        return;
-    }
-
-    $http.post('/signup', $scope.signupData)
-        .then(function (response) {
-            alert('Signup Successful! You can now login.');
-            $scope.signupData = {}; // Reset form
-            document.getElementById('login-tab').click(); // Switch to Login tab
-        })
-        .catch(function (error) {
-            alert(error.data || 'Signup Failed. Please try again.');
-        });
-};
-
+        if ($scope.signupData.username && $scope.signupData.email && $scope.signupData.password) {
+            $http.post('/signup', $scope.signupData)
+                .then(function (response) {
+                    alert('Sign Up Successful!');
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('loginModal'));
+                    modal.hide();
+                    $scope.signupData = {}; // Reset form
+                })
+                .catch(function (error) {
+                    alert('Sign Up Failed. Please try again.');
+                });
+        } else {
+            alert('All fields are required!');
+        }
+    };
 }]);
-
-
             // Check if user is already logged in
             const storedUser = JSON.parse(localStorage.getItem('user'));
             if (storedUser) {
