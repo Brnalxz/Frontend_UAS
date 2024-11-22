@@ -17,6 +17,22 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(viewsPath, 'home.html'));
 });
 
+app.get('/echoes', (req,res) => {
+    res.sendFile(path.join(viewsPath, 'echoes.html'))
+});
+
+app.get('/forum', (req,res) => {
+    res.sendFile(path.join(viewsPath, 'forum.html'))
+});
+
+app.get('/resonators', (req,res) => {
+    res.sendFile(path.join(viewsPath, 'resonators.html'))
+});
+
+app.get('/weapon', (req,res) => {
+    res.sendFile(path.join(viewsPath, 'weapon.html'))
+});
+
 // Endpoint Signup
 app.post('/signup', async (req, res) => {
     try {
