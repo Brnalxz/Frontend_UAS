@@ -1,7 +1,8 @@
+// index.js
 const express = require('express');
 const path = require('path');
 const bcrypt = require('bcrypt');
-const collection = require('./config');
+const collection = require('./Config/config');
 
 const app = express();
 
@@ -9,29 +10,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // Path absolut ke folder views
-const viewsPath = path.join(__dirname, '..', 'views');
+const viewsPath = path.join(__dirname, 'views');
 app.use(express.static(viewsPath));
 
-// Route: Halaman Utama
-app.get('/', (req, res) => {
-    res.sendFile(path.join(viewsPath, 'home.html'));
-});
-
-app.get('/echoes', (req,res) => {
-    res.sendFile(path.join(viewsPath, 'echoes.html'))
-});
-
-app.get('/forum', (req,res) => {
-    res.sendFile(path.join(viewsPath, 'forum.html'))
-});
-
-app.get('/resonators', (req,res) => {
-    res.sendFile(path.join(viewsPath, 'resonators.html'))
-});
-
-app.get('/weapon', (req,res) => {
-    res.sendFile(path.join(viewsPath, 'weapon.html'))
-});
+app.use('/views/Images', express.static(path.join(__dirname, 'views', 'Images')));
 
 // Endpoint Signup
 app.post('/signup', async (req, res) => {
