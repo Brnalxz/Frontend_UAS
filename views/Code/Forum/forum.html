@@ -25,9 +25,8 @@
     </header>
 
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top bg-dark">
         <div class="container">
-
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -35,32 +34,32 @@
 
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
-                    <li class="nav-item" ng-class="{'active': currentTab === 'home'}">
-                        <a class="nav-link" href="../../index.html" ng-click="changeTab('home')">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../../index.html">
                             <i class="fa fa-home"></i>
                             Home
                         </a>
                     </li>
-                    <li class="nav-item" ng-class="{'active': currentTab === 'resonators'}">
-                        <a class="nav-link" href="../Resonators/resonators.html" ng-click="changeTab('resonators')">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../Resonators/resonators.html">
                             <i class="fas fa-broadcast-tower"></i>
                             Resonators
                         </a>
                     </li>
-                    <li class="nav-item" ng-class="{'active': currentTab === 'weapons'}">
-                        <a class="nav-link" href="../Weapons/weapons.html" ng-click="changeTab('weapons')">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../Weapons/weapons.html">
                             <i class="fa fa-book"></i>
                             Weapons
                         </a>
                     </li>
-                    <li class="nav-item" ng-class="{'active': currentTab === 'echoes'}">
-                        <a class="nav-link" href="../Echoes/echoes.html" ng-click="changeTab('echoes')">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../Echoes/echoes.html">
                             <i class="fas fa-wave-square"></i>
                             Echoes
                         </a>
                     </li>
-                    <li class="nav-item" ng-class="{'active': currentTab === 'forum'}">
-                        <a class="nav-link" href="../Forum/forum.html" ng-click="changeTab('forum')">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="../Forum/forum.html">
                             <i class="fa fa-bell"></i>
                             Forum
                         </a>
@@ -70,59 +69,42 @@
         </div>
     </nav>
 
-<!-- Add Post Button -->
-<div class="fixed-bottom m-4 text-end">
-    <button class="btn btn-primary rounded-circle" ng-click="toggleAddPostForm()">
-        <i class="fas fa-plus"></i>
-    </button>
-</div>
-
-<!-- Add Post Modal -->
-<div class="modal" tabindex="-1" role="dialog" ng-show="showAddPostForm">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content bg-dark text-white">
-            <div class="modal-header">
-                <h5 class="modal-title">Add New Post</h5>
-                <button type="button" class="btn-close btn-close-white" aria-label="Close"
-                    ng-click="toggleAddPostForm()"></button>
+    <!-- Add Post Form -->
+    <div class="container mt-4">
+        <div class="card bg-secondary text-white">
+            <div class="card-header">
+                <h5 class="fw-bold">Add New Post</h5>
             </div>
-            <div class="modal-body">
-                <form>
+            <div class="card-body">
+                <form ng-submit="addPost()">
                     <div class="mb-3">
                         <label for="postTitle" class="form-label">Post Title</label>
                         <input type="text" id="postTitle" class="form-control" ng-model="newPost.title"
-                            placeholder="Enter post title">
+                            placeholder="Enter post title" required>
                     </div>
                     <div class="mb-3">
                         <label for="postDescription" class="form-label">Description</label>
                         <textarea id="postDescription" class="form-control" ng-model="newPost.description" rows="4"
-                            placeholder="Enter post description"></textarea>
+                            placeholder="Enter post description" required></textarea>
                     </div>
                     <div class="mb-3">
                         <label for="postImage" class="form-label">Image URL (Optional)</label>
                         <input type="text" id="postImage" class="form-control" ng-model="newPost.image"
                             placeholder="Enter image URL">
                     </div>
+                    <button type="submit" class="btn btn-primary">Add Post</button>
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" ng-click="toggleAddPostForm()">Cancel</button>
-                <button type="button" class="btn btn-primary" ng-click="addPost()">Add Post</button>
             </div>
         </div>
     </div>
-</div>
-
 
     <!-- Posts Section -->
     <div class="container mt-4">
         <div class="row">
-            <div class="row-md-6 mb-3" ng-repeat="post in posts">
-                <div class="card bg-secondary text-white rounded">
+            <div class="col-md-6 mb-3" ng-repeat="post in posts">
+                <div class="card bg-secondary text-white">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <div>
-                            <img ng-src="{{post.profilePic}}" class="rounded-circle me-2" width="30"
-                                alt="{{post.username}}'s profile picture">
                             <span class="fw-bold">{{post.username}}</span>
                         </div>
                         <div class="dropdown">
@@ -130,7 +112,7 @@
                                 <i class="fas fa-ellipsis-v"></i>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
-                                <li><a class="dropdown-item" href="#" ng-click="deletePost($index)">Delete Post</a></li>
+                                <li><a class="dropdown-item" href="#" ng-click="deletePost(post.id)">Delete Post</a></li>
                             </ul>
                         </div>
                     </div>
@@ -149,7 +131,7 @@
         </div>
     </div>
 
-    <!-- Footer Test Again 6 -->
+    <!-- Footer -->
     <footer class="bg-dark text-white text-center py-3">
         <div class="container">
             <p>Thank you for visiting! Find us on social media for more updates.</p>
@@ -170,56 +152,47 @@
     <script>
         var app = angular.module('forumApp', []);
         app.controller('ForumController', function ($scope, $http) {
-        $scope.currentTab = 'forum';
-        $scope.posts = [];
-        $scope.newPost = {};
-        $scope.showAddPostForm = false;
+            $scope.posts = [];
+            $scope.newPost = {};
 
-        // Load posts from backend
-        function loadPosts() {
-            $http.get('http://localhost:3000/posts').then((response) => {
-                $scope.posts = response.data;
-            }).catch((error) => {
-                console.error("Error loading posts:", error);
-            });
-        }
+            // Load posts from backend
+            function loadPosts() {
+                $http.get('http://localhost:5000/posts').then((response) => {
+                    $scope.posts = response.data;
+                }).catch((error) => {
+                    console.error("Error loading posts:", error);
+                });
+            }
 
-        // Toggle Add Post Form
-        $scope.toggleAddPostForm = function () {
-            $scope.showAddPostForm = !$scope.showAddPostForm;
-        };
+            // Add a new post
+            $scope.addPost = function () {
+                const postData = {
+                    title: $scope.newPost.title,
+                    description: $scope.newPost.description,
+                    image: $scope.newPost.image || null,
+                    username: "Anonymous User"
+                };
 
-        // Add a new post
-        $scope.addPost = function () {
-            const postData = {
-                title: $scope.newPost.title,
-                description: $scope.newPost.description,
-                image: $scope.newPost.image || null
+                $http.post('http://localhost:5000/posts', postData).then((response) => {
+                    $scope.posts.unshift(response.data);
+                    $scope.newPost = {}; // Reset form fields
+                }).catch((error) => {
+                    console.error("Error adding post:", error);
+                });
             };
 
-            $http.post('http://localhost:3000/posts', postData).then((response) => {
-                loadPosts(); // Refresh posts after adding
-                $scope.newPost = {}; // Reset form fields
-                $scope.showAddPostForm = false; // Close modal
-            }).catch((error) => {
-                console.error("Error adding post:", error);
-            });
-        };
+            // Delete a post
+            $scope.deletePost = function (id) {
+                $http.delete(`http://localhost:5000/posts/${id}`).then(() => {
+                    $scope.posts = $scope.posts.filter(post => post.id !== id);
+                }).catch((error) => {
+                    console.error("Error deleting post:", error);
+                });
+            };
 
-        // Delete a post
-        $scope.deletePost = function (id) {
-            $http.delete(`http://localhost:3000/posts/${id}`).then((response) => {
-                loadPosts();
-            }).catch((error) => {
-                console.error("Error deleting post:", error);
-            });
-        };
-
-        // Initialize posts
-        loadPosts();
-    });
-        </script>
-
+            // Initialize posts
+            loadPosts();
+        });
     </script>
 </body>
 

@@ -88,7 +88,7 @@
     </header>
 
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top bg-dark">
         <div class="container">
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -189,10 +189,10 @@
         <!-- Character Cards -->
         <div class="row g-4">
             <div class="col-md-4 col-lg-3" ng-repeat="character in characters | filter:searchQuery | filter:categoryFilter">
-                <div class="card" ng-style="{'background-color': character.bgColor == '#d4af37' ? '#FFD700' : '#8A2BE2'}">
+                <div class="card" ng-style="{'background-color': character.bgColor == '#cea502' ? '#cea502' : '#8A2BE2'}">
                     <img ng-src="{{character.img}}" class="card-img-top" alt="{{character.name}}">
                     <div class="card-body text-center">
-                        <h5 class="card-title">{{character.name}}</h5>
+                        <h5 class="card-title bg-secondary text-light">{{character.name}}</h5>
                         <p class="card-text">{{character.type}}</p>
                         <a href="{{character.link}}" class="stretched-link"></a>
                     </div>
@@ -221,16 +221,16 @@
             $scope.currentCategory = 'all';
 
             $scope.characters = [
-                { name: 'Xiangli Yao', category: 'Electro', img: '/views/Images/Resonators/Xiangli Yao-removebg-preview.png', link: '/ResonatorHTML/Xiangli_Yao.html', bgColor: '#d4af37' },
-                { name: 'Changli', category: 'Fusion', img: '/views/Images/Resonators/Changli-removebg-preview.png', link: '/ResonatorHTML/Changli.html', bgColor: '#d4af37' },
-                { name: 'Jinshi', category: 'Spectro', img: '/views/Images/Resonators/Jinshi-removebg-preview.png', link: '/ResonatorHTML/Jinshi.html', bgColor: '#d4af37' },
-                { name: 'Yuan Wu', category: 'Electro', img: '/views/Images/Resonators/Yuanwu-removebg-preview.png', link: '/ResonatorHTML/Yuanwu.html', bgColor: 'purple' },
-                { name: 'Yinlin', category: 'Electro', img: '/views/Images/Resonators/Yinlin-removebg-preview.png', link: '',bgColor: '#d4af37' },
-                { name: 'Male Rover', category: 'Spectro', img: '/views/Images/Resonators/MaleRover-removebg-preview.png', link: '', bgColor: '#d4af37' },
-                { name: 'Baizhi', category: 'Glacio', img: '/views/Images/Resonators/Baizi-removebg-preview.png', link: '/ResonatorHTML/Baizhi.html', bgColor: 'purple' },
+                { name: 'Xiangli Yao', category: 'Electro', img: '/views/Images/Resonators/Xiangli Yao-removebg-preview.png', link: '/views/code/Resonators/ResonatorHTML/Xiangli_Yao.html', bgColor: '#cea502' },
+                { name: 'Changli', category: 'Fusion', img: '/views/Images/Resonators/Changli-removebg-preview.png', link: '/views/code/Resonators/ResonatorHTML/Changli.html', bgColor: '#cea502' },
+                { name: 'Jinshi', category: 'Spectro', img: '/views/Images/Resonators/Jinshi-removebg-preview.png', link: '/views/code/Resonators/ResonatorHTML/Jinshi.html', bgColor: '#cea502' },
+                { name: 'Yuan Wu', category: 'Electro', img: '/views/Images/Resonators/Yuanwu-removebg-preview.png', link: '/views/code/Resonators/ResonatorHTML/Yuanwu.html', bgColor: 'purple' },
+                { name: 'Yinlin', category: 'Electro', img: '/views/Images/Resonators/Yinlin-removebg-preview.png', link: '',bgColor: '#cea502' },
+                { name: 'Male Rover', category: 'Spectro', img: '/views/Images/Resonators/MaleRover-removebg-preview.png', link: '', bgColor: '#cea502' },
+                { name: 'Baizhi', category: 'Glacio', img: '/views/Images/Resonators/Baizi-removebg-preview.png', link: '/views/code/Resonators/ResonatorHTML/Baizhi.html', bgColor: 'purple' },
                 { name: 'Taoqi', category: 'Havoc', img: '/views/Images/Resonators/Taoqi-removebg-preview.png', link: '', bgColor: 'purple' },
-                { name: 'Jiyan', category: 'Aero', img: '/views/Images/Resonators/Jiyan-removebg-preview.png', link: '', bgColor: '#d4af37' },
-                { name: 'Calcharo', category: 'Electro', img: '/views/Images/Resonators/Chalcaro-removebg-preview.png', link: '', bgColor: '#d4af37' },
+                { name: 'Jiyan', category: 'Aero', img: '/views/Images/Resonators/Jiyan-removebg-preview.png', link: '', bgColor: '#cea502' },
+                { name: 'Calcharo', category: 'Electro', img: '/views/Images/Resonators/Chalcaro-removebg-preview.png', link: '', bgColor: '#cea502' },
                 { name: 'Mortefi', category: 'Fusion', img: '/views/Images/Resonators/Mortefi-removebg-preview.png', link: '', bgColor: 'purple' }
             ];
             

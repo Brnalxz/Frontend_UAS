@@ -36,6 +36,17 @@
         .carousel-control-next:hover {
             opacity: 0.7;
         }
+        .modal-body .form-label {
+        color: #000;
+    }
+
+    .modal-body .form-control {
+        color: #000;
+    }
+
+    .modal-title {
+        color:#000;
+    }
     </style>
 </head>
 
@@ -48,12 +59,72 @@
                 <i class="fas fa-bars"></i>
             </button>
             <h1 class="h1 m-0">Wuthering Waves</h1>
-            <a href="../login.html">
-                <button class="btn btn-light" id="loginBtn">Login</button>
+            <a href="#" ng-if="!isLoggedIn">
+                <button class="btn btn-light" id="loginBtn" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
             </a>
+            <a href="#" ng-if="isLoggedIn">
+                <button class="btn btn-light" id="logoutBtn" ng-click="logout()">Logout</button>
+            </a>            
         </div>
     </header>
 
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginModalLabel">Login / Signup</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Navigation Tabs -->
+                    <ul class="nav nav-tabs" id="authTabs" role="tablist">
+                        <li class="nav-item">
+                            <button class="nav-link active" id="login-tab" data-bs-toggle="tab" data-bs-target="#login" type="button" role="tab" aria-controls="login" aria-selected="true">Login</button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link" id="signup-tab" data-bs-toggle="tab" data-bs-target="#signup" type="button" role="tab" aria-controls="signup" aria-selected="false">Sign Up</button>
+                        </li>
+                    </ul>
+                    <!-- Tab Content -->
+                    <div class="tab-content mt-3" id="authTabsContent">
+                        <!-- Login Form -->
+                        <div class="tab-pane fade show active" id="login" role="tabpanel" aria-labelledby="login-tab">
+                            <form ng-submit="submitLogin()" novalidate>
+                                <div class="mb-3">
+                                    <label for="loginEmail" class="form-label">Email</label>
+                                    <input type="email" id="loginEmail" name="email" ng-model="loginData.email" class="form-control" placeholder="Enter email" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="loginPassword" class="form-label">Password</label>
+                                    <input type="password" id="loginPassword" name="password" ng-model="loginData.password" class="form-control" placeholder="Enter password" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100">Login</button>
+                            </form>
+                        </div>
+                        <!-- Signup Form -->
+                        <div class="tab-pane fade" id="signup" role="tabpanel" aria-labelledby="signup-tab">
+                            <form ng-submit="submitSignup()" novalidate>
+                                <div class="mb-3">
+                                    <label for="signupName" class="form-label">Username</label>
+                                    <input type="text" id="signupName" name="username" ng-model="signupData.username" class="form-control" placeholder="Enter Username" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="signupEmail" class="form-label">Email</label>
+                                    <input type="email" id="signupEmail" name="email" ng-model="signupData.email" class="form-control" placeholder="Enter email" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="signupPassword" class="form-label">Password</label>
+                                    <input type="password" id="signupPassword" name="password" ng-model="signupData.password" class="form-control" placeholder="Enter password" required>
+                                </div>
+                                <button type="submit" class="btn btn-success w-100">Sign Up</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top px-2">
         <div class="container">
@@ -196,12 +267,103 @@
 
     <!-- AngularJS Controller -->
     <script>
-        angular.module('mainApp', []).controller('MainController', ['$scope', function ($scope) {
-            $scope.currentTab = 'home';
+angular.module('mainApp', []).controller('MainController', ['$scope', '$http', function ($scope, $http) {
+    $scope.currentTab = 'home';
+    $scope.changeTab = function (tab) {
+        $scope.currentTab = tab;
+    };
+
+    $scope.loginData = {};
+    $scope.signupData = {};
+
+    // Check if user is already logged in
+    $scope.isLoggedIn = false;
+    const storedUser = JSON.parse(localStorage.getItem('user'));
+    if (storedUser) {
+        $scope.isLoggedIn = true; // Set login state from local storage
+        $scope.loggedInUser = storedUser;
+    }
+
+    $scope.submitLogin = function () {
+        if ($scope.loginData.email && $scope.loginData.password) {
+            $http.post('/login', $scope.loginData)
+                .then(function (response) {
+                    alert('Login Successful!');
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('loginModal'));
+                    modal.hide();
+                    $scope.loginData = {}; // Reset form
+                    $scope.isLoggedIn = true; // Set login state to true
+                    localStorage.setItem('user', JSON.stringify({ email: $scope.loginData.email }));
+                })
+                .catch(function (error) {
+                    alert('Login Failed. Please try again.');
+                });
+        } else {
+            alert('Email and password are required!');
+        }
+    };
+
+    $scope.logout = function () {
+        localStorage.removeItem('user');
+        $scope.isLoggedIn = false;
+        alert('You are Logout')
+    };
+
+    $scope.submitSignup = function () {
+        if ($scope.signupData.username && $scope.signupData.email && $scope.signupData.password) {
+            $http.post('/signup', $scope.signupData)
+                .then(function (response) {
+                    alert('Sign Up Successful!');
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('loginModal'));
+                    modal.hide();
+                    $scope.signupData = {}; // Reset form
+                })
+                .catch(function (error) {
+                    alert('Sign Up Failed. Please try again.');
+                });
+        } else {
+            alert('All fields are required!');
+        }
+    };
+}]);
+            // Check if user is already logged in
+            const storedUser = JSON.parse(localStorage.getItem('user'));
+            if (storedUser) {
+                $scope.loggedInUser = storedUser;
+                document.getElementById('loginBtn').textContent = 'Logout';
+            } else {
+                $scope.loggedInUser = null;
+            }
+
             $scope.changeTab = function (tab) {
                 $scope.currentTab = tab;
             };
-        }]);
+
+            document.getElementById('confirmBtn').addEventListener('click', () => {
+                const email = document.getElementById('emailInput').value;
+                const password = document.getElementById('passwordInput').value;
+
+                if (email && password) {
+                    // Save user info in localStorage
+                    const user = { email, password };
+                    localStorage.setItem('user', JSON.stringify(user));
+                    $scope.loggedInUser = user;
+                    document.getElementById('loginBtn').textContent = 'Logout';
+
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('loginModal'));
+                    modal.hide();
+                }
+            });
+
+            // Logout functionality
+            document.getElementById('loginBtn').addEventListener('click', () => {
+                if ($scope.loggedInUser) {
+                    localStorage.removeItem('user');
+                    $scope.loggedInUser = null;
+                    document.getElementById('loginBtn').textContent = 'Login';
+                }
+            });
+            
     </script>
 </body>
 
