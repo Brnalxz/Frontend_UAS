@@ -172,12 +172,12 @@
         <!-- Echoes Section -->
         <div class="row">
             <div class="col-md-4 mb-4" ng-repeat="echo in echoes | filter:searchQuery | filter:categoryFilter">
-                <div class="card bg-dark text-white h-100">
+                <div class="card bg-dark text-white h-100 border-dark">
                     <a href="{{echo.link}}">
                         <img src="{{echo.image}}" class="card-img-top" alt="{{echo.name}}">
                     </a>
-                    <div class="card-body text-center">
-                        <h5 class="card-title">{{echo.name}}</h5>
+                    <div class="card-body bg-secondary text-center">
+                        <h5 class="card-title bg-secondary">{{echo.name}}</h5>
                     </div>
                 </div>
             </div>
