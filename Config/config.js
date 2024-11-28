@@ -1,37 +1,11 @@
+require('dotenv').config();
 const mongoose = require("mongoose");
-const connect = mongoose.connect("mongodb://Marco:1234marco@cluster0-shard-00-00.rxj3p.mongodb.net:27017,cluster0-shard-00-01.rxj3p.mongodb.net:27017,cluster0-shard-00-02.rxj3p.mongodb.net:27017/?ssl=true&replicaSet=atlas-2riovo-shard-0&authSource=admin&retryWrites=true&w=majority&appName=Cluster0");
 
-connect.then(()=> {
-    console.log("database connected");
-});
+const uri = process.env.MONGO_URI;
+if (!uri) {
+    throw new Error('MONGO_URI is not defined. Check your .env file');
+}
+const connect = mongoose.connect(uri);
 
-const userSchema = new mongoose.Schema({
-    username: {
-        type: String,
-        required: true,
-        unique: true, // Username harus unik
-        trim: true
-    },
-    email: {
-        type: String,
-        required: true,
-        unique: true,
-        match: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, // Validasi email
-    },
-    password: {
-        type: String,
-        required: true,
-        minlength: 6, // Panjang minimum password
-    },
-    createdAt: {
-        type: Date,
-        default: Date.now, // Waktu pendaftaran
-    },
-});
-
-const collection = mongoose.model('User', userSchema);
-
-module.exports = collection;
-
-
-
+connect.then(() => console.log('Connected to MongoDB'))
+.catch(err => console.error('MongoDB connection error:', err));
