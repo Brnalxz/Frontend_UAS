@@ -4,6 +4,8 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const path = require('path');
+const bcrypt = require('bcryptjs');
+
 
 // Load environment variables
 const uri = process.env.MONGO_URI;

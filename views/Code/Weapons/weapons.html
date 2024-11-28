@@ -149,10 +149,10 @@
         </div>
 
         <div class="row">
-            <div class="col-md-4 mb-4" ng-repeat="weapon in weapons | filter:searchQuery | filter:categoryFilter">
-                <div class="card bg-dark text-white h-100">
+            <div class="col-md-4 mb-4 w-25 h-25" ng-repeat="weapon in weapons | filter:searchQuery | filter:categoryFilter">
+                <div class="card bg-dark text-white h-100 border-dark">
                     <a href="{{weapon.link}}">
-                        <img src="{{weapon.image}}" class="card-img-top" alt="{{weapon.name}}">
+                        <img src="{{weapon.image}}" class="card-img-top mx-auto d-block w-100 h-100" alt="{{weapon.name}}">
                     </a>
                     <div class="card-body text-center">
                         <h5 class="card-title">{{weapon.name}}</h5>
