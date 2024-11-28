@@ -1,13 +1,29 @@
 const mongoose = require('mongoose');
 
 const usersSchema = new mongoose.Schema({
-    name: String,
-    email: String,
-    // password: String, // Need to get Encrypted later
-    // bio: String,
-    // // joinDate: Date,
-    // location: String,
+    username: {
+        type: String,
+        required: true,
+        unique: true, // Username harus unik
+        trim: true
+    },
+    email: {
+        type: String,
+        required: true,
+        unique: true,
+        match: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, // Validasi email
+    },
+    password: {
+        type: String,
+        required: true,
+        minlength: 6, // Panjang minimum password
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now, // Waktu pendaftaran
+    },
 });
 
-module.exports = mongoose.model('Users', usersSchema);
+const collection = mongoose.model('Users', usersSchema);
 
+module.exports = collection;
