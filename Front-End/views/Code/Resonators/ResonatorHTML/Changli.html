@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/views/Code/Resonators/ResonatorHTML/ResonatorHTML.css">
+    <title>Changli Build Guide</title>
+</head>
+<body>
+    <a href="/views/Code/Resonators/resonators.html">
+        <button class="back-button">
+            BACK
+        </button>
+    </a>
+
+    <div class="container">
+        <div class="character-section">
+            <img src="/views/Images/Resonators/Changli.png" alt="Changli" class="character-img">
+            <div class="character-info">
+                <h1>Changli Build Guide</h1>
+                <div class="rating">★★★★★</div>
+                <img src="/views/Images/Resonators/elementLogo/fusion.png">
+                <img src="/views/Images/Resonators/weaponLogo/sword.png">
+                <p>Level: 90</p>
+            </div>
+            <div class="stats">
+                <div class="stat-item">HP: 10388</div>
+                <div class="stat-item">ATK: 463</div>
+                <div class="stat-item">DEF: 1100</div>
+                <div class="stat-item">Energy: 100</div>
+            </div>
+        </div>
+        <div class="menu-section">
+            <button class="menu-btn" onclick="scrollToBuild()">Overview</button>
+            <button class="menu-btn" onclick="scrollToBuild2()">Skills</button>
+            <button class="menu-btn" onclick="scrollToBuild3()">Resonance Chain</button>
+            <!-- <button class="menu-btn">Build (Echo & Weapon)</button>
+            <button class="menu-btn">Ascension</button> -->
+        </div>
+    </div>
+
+    <!-- Overview Section -->
+    <div class="overview-section" id="overview">
+        <h2>Changli Overview</h2>
+        <p>In Wuthering Waves, Changli is a 5 Stars Fusion character and uses a Sword during the fight.</p>
+
+        <p>
+            When Changli uses the <span class="highlight">Resonance Skill</span>, <span class="highlight">Intro Skill</span>, 
+            <span class="highlight">Ground Basic Attack 4</span>, or <span class="highlight">Mid-air Basic Attack 4</span>, 
+            Changli enters a state called <span class="highlight">True Sight</span>.
+        </p>
+
+        <p>
+            During <span class="highlight">True Sight</span>, Changli's Basic Attack will be enhanced. This enhanced attack can be used 
+            on the ground or in mid-air, and is called <span class="highlight">True Sight - Conquest</span> and 
+            <span class="highlight">True Sight - Charge</span>.
+        </p>
+
+        <p>
+            After using <span class="highlight">Conquest</span> or <span class="highlight">Charge</span>, Changli will gain 1 stack of 
+            <span class="highlight">Enflamement</span>. The maximum stack of <span class="highlight">Enflamement</span> is 4.
+        </p>
+
+        <p>
+            When <span class="highlight">Enflamement</span> reaches 4 stacks, Changli can use the Heavy Attack: 
+            <span class="highlight">Flaming Sacrifice</span>, which is Changli's main source of damage.
+        </p>
+
+        <p>
+            In addition to using <span class="highlight">Conquest</span> or <span class="highlight">Charge</span>, 
+            Changli's <span class="highlight">Liberation</span> can also gain <span class="highlight">Enflamement</span>, 
+            and it can reach up to 4 stacks immediately.
+        </p>
+
+        <p class="summary">
+            Summary: By using the <span class="highlight">Resonance Skill</span>, <span class="highlight">Intro Skill</span>, 
+            <span class="highlight">Ground Basic Attack 4</span>, or <span class="highlight">Mid-air Basic Attack 4</span>, 
+            Changli enters <span class="highlight">True Sight</span> and can use <span class="highlight">Conquest</span> or 
+            <span class="highlight">Charge</span> once, gaining 1 stack of <span class="highlight">Enflamement</span>.
+            After using <span class="highlight">Conquest</span> or <span class="highlight">Charge</span> 4 times, 
+            or by directly using <span class="highlight">Liberation</span> to reach 4 stacks of <span class="highlight">Enflamement</span>, 
+            the <span class="highlight">Heavy Attack: Flaming Sacrifice</span> can be used.
+        </p>
+    </div>
+
+    <!-- Skill Section -->
+    <div class="skills-section" id="skills">
+        <h2>Changli Skills</h2>
+        <p>
+            <img src="/views/Images/Resonators/skillLogo/changliSkillLogo/normal.png" class="skillLogo">
+            <strong>Blazing Enliightment - Normal Attack</strong>
+        </p>
+        <p>
+            <span class="highlight">Basic Attack</span>
+            <br>
+                Perform up to 4 consecutive attacks, dealing Fusion DMG. After releasing Basic Attack 4, enter True Sight, lasting for 12s.
+
+            <br><br>
+
+            <span class="highlight">Mid-air Attack</span>
+            <br>
+                Consume Stamina to perform up to 4 consecutive attacks in mid-air, dealing Fusion DMG. After releasing Mid-air Attack 4, enter True Sight, lasting for 12s.
+
+            <br><br>
+
+            <span class="highlight">Heavy Attack</span>
+            <br>
+                Hold Basic Attack on the ground to perform an upward strike at the cost of Stamina, dealing Fusion DMG. 
+                Use Basic Attack within a certain time to release Mid-Air Attack 3.
+            
+            <br><br>
+
+            <span class="highlight">Mid-air Heavy Attack</span>
+            <br>
+                Shortly after holding Basic Attack in mid-air or using Basic Attack True Sight: Charge, use Basic Attack to perform a plunging attack at the cost of Stamina, dealing Fusion DMG. Use Basic Attack within a certain time to release Basic Attack 3.
+            
+            <br><br>
+            <span class="highlight">Dodge Counter</span>
+            <br>
+                Use Basic Attack after a successful Dodge to attack the target, dealing Fusion DMG.
+        </p>
+
+        <hr>
+
+        <p>
+            <img src="/views/Images/Resonators/skillLogo/changliSkillLogo/skill.png" class="skillLogo">
+            <strong>Tripartite Flames - Resonance Skill</strong>
+        </p>
+        <p>
+            <span class="highlight">True Sight: Capture</span>
+            <br>
+                After releasing Resonance Skill, Changli dashes towards the enemy and enters True Sight, lasting for 12s. 
+                In the end, she releases a plunging attack, dealing Fusion DMG. True Sight: Capture has 2 initial charges and holds up to 2 charges in maximum. 
+                The number of charges is replenished by 1 every 12s. Can be cast in mid-air.
+            
+            <br><br>
+            <span class="highlight">Basic Attack: True Sight - Conquest</span>
+            <br>
+                When in True Sight, if Changli uses Ground Basic Attack, she releases True Sight: Conquest, dashing towards the enemy and 
+                dealing Fusion DMG, considered as Resonance Skill DMG. After releasing True Sight: Conquest, True Sight ends.
+
+            <br><br>
+            <span class="highlight">Basic Attack: True Sight - Charge</span>
+            <br>
+                When in True Sight, if Changli jumps or uses Basic Attack in mid-air, she releases True Sight: Charge,
+                dashing towards the enemy and dealing Fusion DMG, considered as Resonance Skill DMG. After releasing True Sight: Charge, True Sight ends.
+        </p>
+
+        <hr>
+        
+        <p>
+            <img src="/views/Images/Resonators/skillLogo/changliSkillLogo/ultimate.png" class="skillLogo">
+            <strong>Radiance of Fealty - Resonance Liberation</strong>
+        </p>
+        <p>
+            Deal Fusion DMG to nearby targets, obtaining 4 stacks of Enflamement, and entering Fiery Feather. Can be cast in mid-air.
+            
+            <br><br>
+            <span class="highlight">Fiery Feather</span>
+            <br>
+            When Changli releases Heavy Attack Flaming Sacrifice within 10s, her ATK is increased by 25%, after which Fiery Feather ends.
+        </p>
+
+        <hr>
+
+        <p>
+            <img src="/views/Images/Resonators/skillLogo/changliSkillLogo/passive.png" class="skillLogo">
+            <strong>Flaming Sacrifice - Forte Circuit</strong>
+        </p>
+        <p>
+            <span class="highlight">Heavy Attack: Flaming Sacrifice</span>
+            <br>
+                When releasing Heavy Attack, if Changli carries 4 stacks of Enflamement, she consumes all stacks of Enflamement to cast Flaming Sacrifice, dealing Fusion DMG, considered as Resonance Skill DMG. While casting Flaming Sacrifice, Changli takes 40% less DMG.
+            
+            <br><br>
+
+            <span class="highlight">Enflamement</span>
+            <br>
+                Changli can hold up to 4 stacks of Enflamement. Changli obtains 1 stack of Enflamement for every Basic Attack: True Sight - Conquest on hit. Changli obtains 1 stack of Enflamement for every Basic Attack: True Sight - Charge on hit. Changli obtains 4 stacks of Enflamement for every Resonance Liberation Radiance of Fealty.
+        </p>
+    </div>
+
+    <!-- Resonance Chain Section -->
+    <div class="resonanceChain-section" id="resonanceChain">
+        <h2>Changli Resonance Chain</h2>
+        <p>
+            <span class="highlight">S1</span>
+            <br>
+                Primarily provides Changli with anti-interruption. Note that both 'Basic Attack: True Sight - Conquest' and 'Basic Attack: True Sight - Charge' benefit from this effect.
+
+            <br><br>
+            <span class="highlight">S2</span>
+            <br>
+                With Changli's frequent use of 'Basic Attack: True Sight - Conquest' and 'Basic Attack: True Sight - Charge,' this buff is effectively always active. This increases Changli's damage by approximately 19.26%.
+
+            <br><br>
+            <span class="highlight">S3</span>
+            <br>
+                Liberation's damage is increased by 80%. Although the percentage increase is significant, considering Changli's Liberation does not contribute heavily to overall damage, the actual improvement is about 7.96%.
+
+            <br><br>
+            <span class="highlight">S4</span>
+            <br>
+                After using Intro Skill, the whole team's attack is increased by 20%. This enhances Changli's support capability, providing approximately a 10.4% boost to Changli's damage. 
+                As Changli is a Sub DPS/Support in the team, the actual benefit from S4 might be significantly higher. For example, in a team with Jinhsi and Changli, this 20% attack increase boosts Jinhsi's damage by about 7.5%.
+
+            <br><br>
+            <span class="highlight">S5</span>
+            <br>
+                The Heavy Attack Flaming Sacrifice's multiplier is increased by 50%, and the damage dealt is increased by 50%, resulting in a total improvement of about 25.72%.
+
+            <br><br>
+            <span class="highlight">S6</span>
+            <br>
+                Changli additionally ignores 40% of the enemy's defense, resulting in an overall damage increase of approximately 38.11%.
+        </p>
+    </div>
+    <script>
+        function scrollToBuild() {
+            const buildSection = document.getElementById("overview");
+            buildSection.scrollIntoView({ behavior: "smooth" });
+        }
+
+        function scrollToBuild2() {
+            const buildSection = document.getElementById("skills");
+            buildSection.scrollIntoView({ behavior: "smooth" });
+        }
+
+        function scrollToBuild3() {
+            const buildSection = document.getElementById("resonanceChain");
+            buildSection.scrollIntoView({ behavior: "smooth" });
+        }
+    </script>
+</body>
+</html>

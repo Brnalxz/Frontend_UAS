@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="weaponsApp">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weapons Archive</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
+    <!-- Font awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <!-- AngularJS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+
+    <!-- Some Styles -->
+    <style>
+        body {
+            background-color: #162938;
+            color: #ddd;
+        }
+
+        .navbar, .footer {
+            background-color: #1b2d3c;
+        }
+
+        .btn-outline-light {
+            border-color: #5a9;
+            color: #5a9;
+        }
+
+        .btn-outline-light:hover {
+            background-color: #5a9;
+            color: #fff;
+        }
+
+        .card-img-top {
+            object-fit: cover;
+            height: 300px;
+        }
+
+        .card {
+            background-color: #1e3c4d;
+            border: none;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body ng-controller="WeaponsController">
+    <!-- Header -->
+    <header class="bg-dark text-white py-3">
+        <div class="container">
+            <h1>Weapons Archive</h1>
+        </div>
+    </header>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top bg-dark">
+        <div class="container">
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item" ng-class="{'active': currentTab === 'home'}">
+                        <a class="nav-link" href="../../index.html" ng-click="changeTab('home')">
+                            <i class="fa fa-home"></i> 
+                            Home
+                        </a>
+                    </li>
+                    <li class="nav-item" ng-class="{'active': currentTab === 'resonators'}">
+                        <a class="nav-link" href="../Resonators/resonators.html" ng-click="changeTab('resonators')">
+                            <i class="fas fa-broadcast-tower"></i> 
+                            Resonators
+                        </a>
+                    </li>
+                    <li class="nav-item" ng-class="{'active': currentTab === 'weapons'}">
+                        <a class="nav-link" href="weapons.html" ng-click="changeTab('weapons')">
+                            <i class="fa fa-book"></i>
+                            Weapons
+                        </a>
+                    </li>
+                    <li class="nav-item" ng-class="{'active': currentTab === 'echoes'}">
+                        <a class="nav-link" href="../Echoes/echoes.html" ng-click="changeTab('echoes')">
+                            <i class="fas fa-wave-square"></i> 
+                            Echoes
+                        </a>
+                    </li>
+                    <li class="nav-item" ng-class="{'active': currentTab === 'forum'}">
+                        <a class="nav-link" href="../Forum/forum.html" ng-click="changeTab('forum')">
+                            <i class="fa fa-bell"></i> 
+                            Forum
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="container weapons-section my-5">
+        <div class="mb-4">
+        <!-- Search Section -->
+        <h5 class="text-white mb-3">Search Weapons</h5>
+        <div class="input-group mb-3 search-bar">
+            <input type="text" class="form-control" placeholder="Search weapon..." ng-model="searchQuery">
+            <button class="btn btn-primary" type="button">
+                <i class="fa fa-search"></i>
+            </button>
+        </div>
+
+        <div class="btn-group mb-4" role="group" aria-label="Weapon categories">
+            <button type="button" class="btn btn-outline-light" 
+                ng-class="{'btn-success text-white': currentCategory === 'all'}" 
+                ng-click="filterCategory('all')">
+                Show All
+            </button>
+            <button type="button" class="btn btn-outline-light" 
+                ng-class="{'btn-success text-white': currentCategory === 'sword'}"
+                ng-click="filterCategory('sword')">
+                Sword
+            </button>
+            <button type="button" class="btn btn-outline-light" 
+                ng-class="{'btn-success text-white': currentCategory === 'gauntlet'}"
+                ng-click="filterCategory('gauntlets')">
+                Gauntlet
+            </button>
+            <button type="button" class="btn btn-outline-light" 
+                ng-class="{'btn-success text-white': currentCategory === 'broadblade'}"
+                ng-click="filterCategory('broadblade')">
+                Broadblade
+            </button>
+            <button type="button" class="btn btn-outline-light" 
+                ng-class="{'btn-success text-white': currentCategory === 'pistols'}"
+                ng-click="filterCategory('pistols')">
+                Pistols
+            </button>
+            <button type="button" class="btn btn-outline-light" 
+                ng-class="{'btn-success text-white': currentCategory === 'rectifier'}"
+                ng-click="filterCategory('rectifier')">
+                Rectifier
+            </button>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 mb-4 w-25 h-25" ng-repeat="weapon in weapons | filter:searchQuery | filter:categoryFilter">
+                <div class="card bg-dark text-white h-100 border-dark">
+                    <a href="{{weapon.link}}">
+                        <img src="{{weapon.image}}" class="card-img-top mx-auto d-block w-100 h-100" alt="{{weapon.name}}">
+                    </a>
+                    <div class="card-body text-center">
+                        <h5 class="card-title">{{weapon.name}}</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-3">
+        <div class="container">
+            <p>Thank you for visiting! Find us on social media for more updates.</p>
+            <ul class="list-inline">
+                <li class="list-inline-item"><a href="#" class="text-white"><i class="fab fa-facebook"></i></a></li>
+                <li class="list-inline-item"><a href="#" class="text-white"><i class="fab fa-whatsapp"></i></a></li>
+                <li class="list-inline-item"><a href="#" class="text-white"><i class="fab fa-instagram"></i></a></li>
+                <li class="list-inline-item"><a href="#" class="text-white"><i class="fab fa-youtube"></i></a></li>
+            </ul>
+            <p>&copy; 2024 SK Group</p>
+        </div>
+    </footer>
+
+    <script>
+        angular.module('weaponsApp', []).controller('WeaponsController', ['$scope', function ($scope) {
+            $scope.searchQuery = '';
+            $scope.currentCategory = 'all';
+
+            $scope.weapons = [
+                { name: "Verity's Handle", image: "/views/Images/Weapon-Images/Verity'sHandle.png", link: "/views/code/Weapons/WeaponHTML/Verity'sHandle.html", category: 'gauntlets' },
+                { name: "Lustrous Razor", image: "/views/Images/Weapon-Images/LustrousRazor.png", link: "/views/code/Weapons/WeaponHTML/LustrousRazor.html", category: 'broadblade' },
+                { name: "Blazing Brilliance", image: "/views/Images/Weapon-Images/BlazingBrilliance.png", link: "/views/code/Weapons/WeaponHTML/BlazingBrilliance.html", category: 'sword' },
+                { name: "Nova Burst", image: "/views/Images/Weapon-Images/NovaBurst.png", link: "/views/code/Weapons/WeaponHTML/NovaBurst.html", category: 'pistols' },
+                { name: "Rectifier#25", image: "/views/Images/Weapon-Images/Rectifier25.png", link: "/views/code/Weapons/WeaponHTML/Rectifier25.html", category: 'rectifier' }
+            ];
+
+            $scope.filterCategory = function (category) {
+                $scope.currentCategory = category;
+                $scope.categoryFilter = category === 'all' ? '' : { category: category };
+            };
+        }]);
+    </script>
+
+    <!-- Bootstrap 5 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
