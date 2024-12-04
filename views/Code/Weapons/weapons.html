@@ -45,6 +45,11 @@
             background-color: #1e3c4d;
             border: none;
             border-radius: 10px;
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: column;
         }
     </style>
 </head>
@@ -149,13 +154,15 @@
         </div>
 
         <div class="row">
-            <div class="col-md-4 mb-4 w-25 h-25" ng-repeat="weapon in weapons | filter:searchQuery | filter:categoryFilter">
-                <div class="card bg-dark text-white h-100 border-dark">
-                    <a href="{{weapon.link}}">
-                        <img src="{{weapon.image}}" class="card-img-top mx-auto d-block w-100 h-100" alt="{{weapon.name}}">
-                    </a>
-                    <div class="card-body text-center">
-                        <h5 class="card-title">{{weapon.name}}</h5>
+            <div class="col-md-4 col-lg-3" ng-repeat="weapon in weapons | filter:searchQuery | filter:categoryFilter">
+                <div class="card">
+                    <div class="card bg-dark text-white h-100 border-dark">
+                        <a href="{{weapon.link}}">
+                            <img src="{{weapon.image}}" class="card-img-top mx-auto d-block w-100 h-100" alt="{{weapon.name}}">
+                        </a>
+                        <div class="card-body text-center">
+                            <h5 class="card-title">{{weapon.name}}</h5>
+                        </div>
                     </div>
                 </div>
             </div>
