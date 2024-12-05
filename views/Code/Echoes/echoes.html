@@ -55,6 +55,19 @@
             text-align: center;
         }
 
+        .wishlist-icon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 24px;
+            color: red;
+            display: none;
+        }
+
+        .wishlist-icon.active {
+            display: block;
+        }
+
         .btn-outline-light {
             border-color: #5a9;
             color: #5a9;
@@ -132,6 +145,15 @@
     <!-- Main Content -->
     <div class="container my-4">
         <div class="mb-4">
+            <h5 class="text-white">Add to Wishlist</h5>
+            <div class="mb-3">
+                <button type="button" class="btn btn-outline-light me-2 mb-2" 
+                    ng-repeat="echo in echoes" 
+                    ng-click="toggleWishlist(character)">
+                    {{echo.name}}
+                </button>
+            </div>
+
             <!-- Search Section -->
             <h5 class="text-white mb-3">Search Echoes</h5>
             <div class="input-group mb-3 search-bar">
