@@ -1,6 +1,15 @@
 const mongoose = require('mongoose');
+// const autoIncrement = require('mongoose-auto-increment');
+
+// const connection = mongoose.connection;
+// console.log("mg = ", mongoose.connection);
+// autoIncrement.initialize(connection);
 
 const usersSchema = new mongoose.Schema({
+    // userId: {
+    //     type: Number,
+    //     unique: true,
+    // },
     username: {
         type: String,
         required: true,
@@ -23,6 +32,13 @@ const usersSchema = new mongoose.Schema({
         default: Date.now, // Waktu pendaftaran
     },
 });
+
+// usersSchema.plugin(autoIncrement.plugin, {
+//     model: 'Users',
+//     field: 'userId',
+//     startAt: 1,
+//     incrementBy: 1
+// });
 
 const collection = mongoose.model('Users', usersSchema);
 
