@@ -266,103 +266,103 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- AngularJS Controller -->
-    <script>
-angular.module('mainApp', []).controller('MainController', ['$scope', '$http', function ($scope, $http) {
-    $scope.currentTab = 'home';
-    $scope.changeTab = function (tab) {
-        $scope.currentTab = tab;
-    };
+    <script src="/public/js/controller.js">
+// angular.module('mainApp', []).controller('MainController', ['$scope', '$http', function ($scope, $http) {
+//     $scope.currentTab = 'home';
+//     $scope.changeTab = function (tab) {
+//         $scope.currentTab = tab;
+//     };
 
-    $scope.loginData = {};
-    $scope.signupData = {};
+//     $scope.loginData = {};
+//     $scope.signupData = {};
 
-    // Check if user is already logged in
-    $scope.isLoggedIn = false;
-    const storedUser = JSON.parse(localStorage.getItem('user'));
-    if (storedUser) {
-        $scope.isLoggedIn = true; // Set login state from local storage
-        $scope.loggedInUser = storedUser;
-    }
+//     // Check if user is already logged in
+//     $scope.isLoggedIn = false;
+//     const storedUser = JSON.parse(localStorage.getItem('user'));
+//     if (storedUser) {
+//         $scope.isLoggedIn = true; // Set login state from local storage
+//         $scope.loggedInUser = storedUser;
+//     }
 
-    $scope.submitLogin = function () {
-        if ($scope.loginData.email && $scope.loginData.password) {
-            $http.post('/login', $scope.loginData)
-                .then(function (response) {
-                    alert('Login Successful!');
-                    const modal = bootstrap.Modal.getInstance(document.getElementById('loginModal'));
-                    modal.hide();
-                    $scope.loginData = {}; // Reset form
-                    $scope.isLoggedIn = true; // Set login state to true
-                    localStorage.setItem('user', JSON.stringify({ email: $scope.loginData.email }));
-                })
-                .catch(function (error) {
-                    alert('Login Failed. Please try again.');
-                });
-        } else {
-            alert('Email and password are required!');
-        }
-    };
+//     $scope.submitLogin = function () {
+//         if ($scope.loginData.email && $scope.loginData.password) {
+//             $http.post('/login', $scope.loginData)
+//                 .then(function (response) {
+//                     alert('Login Successful!');
+//                     const modal = bootstrap.Modal.getInstance(document.getElementById('loginModal'));
+//                     modal.hide();
+//                     $scope.loginData = {}; // Reset form
+//                     $scope.isLoggedIn = true; // Set login state to true
+//                     localStorage.setItem('user', JSON.stringify({ email: $scope.loginData.email }));
+//                 })
+//                 .catch(function (error) {
+//                     alert('Login Failed. Please try again.');
+//                 });
+//         } else {
+//             alert('Email and password are required!');
+//         }
+//     };
 
-    $scope.logout = function () {
-        localStorage.removeItem('user');
-        $scope.isLoggedIn = false;
-        alert('You are Logout')
-    };
+//     $scope.logout = function () {
+//         localStorage.removeItem('user');
+//         $scope.isLoggedIn = false;
+//         alert('You are Logout')
+//     };
 
-    $scope.submitSignup = function () {
-        if ($scope.signupData.username && $scope.signupData.email && $scope.signupData.password) {
-            $http.post('/signup', $scope.signupData)
-                .then(function (response) {
-                    alert('Sign Up Successful!');
-                    const modal = bootstrap.Modal.getInstance(document.getElementById('loginModal'));
-                    modal.hide();
-                    $scope.signupData = {}; // Reset form
-                })
-                .catch(function (error) {
-                    alert('Sign Up Failed. Please try again.');
-                });
-        } else {
-            alert('All fields are required!');
-        }
-    };
-}]);
-            // Check if user is already logged in
-            const storedUser = JSON.parse(localStorage.getItem('user'));
-            if (storedUser) {
-                $scope.loggedInUser = storedUser;
-                document.getElementById('loginBtn').textContent = 'Logout';
-            } else {
-                $scope.loggedInUser = null;
-            }
+//     $scope.submitSignup = function () {
+//         if ($scope.signupData.username && $scope.signupData.email && $scope.signupData.password) {
+//             $http.post('/signup', $scope.signupData)
+//                 .then(function (response) {
+//                     alert('Sign Up Successful!');
+//                     const modal = bootstrap.Modal.getInstance(document.getElementById('loginModal'));
+//                     modal.hide();
+//                     $scope.signupData = {}; // Reset form
+//                 })
+//                 .catch(function (error) {
+//                     alert('Sign Up Failed. Please try again.');
+//                 });
+//         } else {
+//             alert('All fields are required!');
+//         }
+//     };
+// }]);
+//             // Check if user is already logged in
+//             const storedUser = JSON.parse(localStorage.getItem('user'));
+//             if (storedUser) {
+//                 $scope.loggedInUser = storedUser;
+//                 document.getElementById('loginBtn').textContent = 'Logout';
+//             } else {
+//                 $scope.loggedInUser = null;
+//             }
 
-            $scope.changeTab = function (tab) {
-                $scope.currentTab = tab;
-            };
+//             $scope.changeTab = function (tab) {
+//                 $scope.currentTab = tab;
+//             };
 
-            document.getElementById('confirmBtn').addEventListener('click', () => {
-                const email = document.getElementById('emailInput').value;
-                const password = document.getElementById('passwordInput').value;
+//             document.getElementById('confirmBtn').addEventListener('click', () => {
+//                 const email = document.getElementById('emailInput').value;
+//                 const password = document.getElementById('passwordInput').value;
 
-                if (email && password) {
-                    // Save user info in localStorage
-                    const user = { email, password };
-                    localStorage.setItem('user', JSON.stringify(user));
-                    $scope.loggedInUser = user;
-                    document.getElementById('loginBtn').textContent = 'Logout';
+//                 if (email && password) {
+//                     // Save user info in localStorage
+//                     const user = { email, password };
+//                     localStorage.setItem('user', JSON.stringify(user));
+//                     $scope.loggedInUser = user;
+//                     document.getElementById('loginBtn').textContent = 'Logout';
 
-                    const modal = bootstrap.Modal.getInstance(document.getElementById('loginModal'));
-                    modal.hide();
-                }
-            });
+//                     const modal = bootstrap.Modal.getInstance(document.getElementById('loginModal'));
+//                     modal.hide();
+//                 }
+//             });
 
-            // Logout functionality
-            document.getElementById('loginBtn').addEventListener('click', () => {
-                if ($scope.loggedInUser) {
-                    localStorage.removeItem('user');
-                    $scope.loggedInUser = null;
-                    document.getElementById('loginBtn').textContent = 'Login';
-                }
-            });
+//             // Logout functionality
+//             document.getElementById('loginBtn').addEventListener('click', () => {
+//                 if ($scope.loggedInUser) {
+//                     localStorage.removeItem('user');
+//                     $scope.loggedInUser = null;
+//                     document.getElementById('loginBtn').textContent = 'Login';
+//                 }
+//             });
             
     </script>
 </body>
