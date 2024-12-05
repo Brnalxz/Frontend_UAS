@@ -13,8 +13,7 @@ const usersSchema = new mongoose.Schema({
     username: {
         type: String,
         required: true,
-        unique: true, // Username harus unik
-        trim: true
+        unique: true,
     },
     email: {
         type: String,
@@ -25,11 +24,16 @@ const usersSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true,
-        minlength: 6, // Panjang minimum password
+        minlength: 8, // Panjang minimum password
     },
     createdAt: {
         type: Date,
-        default: Date.now, // Waktu pendaftaran
+        default: Date.now,
+    },
+    role: {
+        type: String,
+        enum: ['user', 'admin', 'moderator'],
+        default: 'user',
     },
 });
 
