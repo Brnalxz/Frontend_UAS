@@ -60,6 +60,19 @@
             text-align: center;
         }
 
+        .wishlist-icon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 24px;
+            color: red;
+            display: none;
+        }
+
+        .wishlist-icon.active {
+            display: block;
+        }
+        
         .btn-outline-light {
             border-color: #5a9;
             color: #5a9;
@@ -132,10 +145,20 @@
             </div>
         </div>
     </nav>
-
+        
     <!-- Main Content -->
     <div class="container my-5">
         <div class="mb-4">
+
+                <!-- Wishlist -->
+    <h5 class="text-white">Add to Wishlist</h5>
+    <div class="mb-3">
+        <button type="button" class="btn btn-outline-light me-2 mb-2" 
+            ng-repeat="character in characters" 
+            ng-click="toggleWishlist(character)">
+            {{character.name}}
+        </button>
+    </div>
             <!-- Search Section -->
             <h5 class="text-white mb-3">Search Resonators</h5>
             <div class="input-group mb-3 search-bar">
@@ -190,6 +213,8 @@
         <div class="row g-4">
             <div class="col-md-4 col-lg-3" ng-repeat="character in characters | filter:searchQuery | filter:categoryFilter">
                 <div class="card" ng-style="{'background-color': character.bgColor == '#cea502' ? '#cea502' : '#8A2BE2'}">
+                    <i class="fas fa-heart wishlist-icon" 
+                       ng-class="{'active': character.isWishlist}"></i>
                     <img ng-src="{{character.img}}" class="card-img-top" alt="{{character.name}}">
                     <div class="card-body text-center bg-secondary">
                         <h5 class="card-title bg-secondary text-light">{{character.name}}</h5>
@@ -217,14 +242,16 @@
 
     <script>
         angular.module('resonatorApp', []).controller('ResonatorController', function ($scope) {
+            const savedWishlist = JSON.parse(localStorage.getItem('wishlist')) || {};
+
             $scope.searchQuery = '';
             $scope.currentCategory = 'all';
 
             $scope.characters = [
-                { name: 'Xiangli Yao', category: 'Electro', img: '/views/Images/Resonators/Xiangli Yao-Half.png', link: '/views/code/Resonators/ResonatorHTML/Xiangli_Yao.html', bgColor: '#cea502' },
-                { name: 'Changli', category: 'Fusion', img: '/views/Images/Resonators/Changli-Half.png', link: '/views/code/Resonators/ResonatorHTML/Changli.html', bgColor: '#cea502' },
-                { name: 'Jinshi', category: 'Spectro', img: '/views/Images/Resonators/Jinshi-Half.png', link: '/views/code/Resonators/ResonatorHTML/Jinshi.html', bgColor: '#cea502' },
-                { name: 'Yuan Wu', category: 'Electro', img: '/views/Images/Resonators/Yuanwu-Half.png', link: '/views/code/Resonators/ResonatorHTML/Yuanwu.html', bgColor: 'purple' },
+                { name: 'Xiangli Yao', category: 'Electro', img: '/views/Images/Resonators/Xiangli Yao-Half.png', link: '/views/code/Resonators/ResonatorHTML/Xiangli_Yao.html', isWishlist: savedWishlist['Xiangli Yao'] || false, bgColor: '#cea502' },
+                { name: 'Changli', category: 'Fusion', img: '/views/Images/Resonators/Changli-Half.png', link: '/views/code/Resonators/ResonatorHTML/Changli.html', isWishlist: savedWishlist['Changli'] || false, bgColor: '#cea502' },
+                { name: 'Jinshi', category: 'Spectro', img: '/views/Images/Resonators/Jinshi-Half.png', link: '/views/code/Resonators/ResonatorHTML/Jinshi.html', isWishlist: savedWishlist['Jin Shi'] || false, bgColor: '#cea502' },
+                { name: 'Yuan Wu', category: 'Electro', img: '/views/Images/Resonators/Yuanwu-Half.png', link: '/views/code/Resonators/ResonatorHTML/Yuanwu.html', isWishlist: savedWishlist['Yuan Wu'] || false, bgColor: 'purple' },
                 { name: 'Yinlin', category: 'Electro', img: '/views/Images/Resonators/Yinlin-Half.png', link: '',bgColor: '#cea502' },
                 { name: 'Male Rover', category: 'Spectro', img: '/views/Images/Resonators/maleRover-Half.png', link: '', bgColor: '#cea502' },
                 { name: 'Baizhi', category: 'Glacio', img: '/views/Images/Resonators/Baizhi-HalfBody.png', link: '/views/code/Resonators/ResonatorHTML/Baizhi.html', bgColor: 'purple' },
@@ -233,7 +260,19 @@
                 { name: 'Calcharo', category: 'Electro', img: '/views/Images/Resonators/Chalcaro-Half.png', link: '', bgColor: '#cea502' },
                 { name: 'Mortefi', category: 'Fusion', img: '/views/Images/Resonators/Mortefi-Half.png', link: '', bgColor: 'purple' }
             ];
-            
+             $scope.toggleWishlist = function (character) {
+                character.isWishlist = !character.isWishlist;
+                $scope.saveWishlist();
+            };
+
+            // Save wishlist to localStorage
+            $scope.saveWishlist = function () {
+                const wishlist = {};
+                $scope.characters.forEach(character => {
+                    wishlist[character.name] = character.isWishlist;
+                });
+                localStorage.setItem('wishlist', JSON.stringify(wishlist));
+            };
             $scope.filterCategory = function (category) {
                 $scope.currentCategory = category;
                 $scope.categoryFilter = category === 'all' ? '' : { category: category };

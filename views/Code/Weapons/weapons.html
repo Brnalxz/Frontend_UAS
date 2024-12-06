@@ -51,6 +51,20 @@
             flex-wrap: wrap;
             flex-direction: column;
         }
+
+        .wishlist-icon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 24px;
+            color: red;
+            display: none;
+        }
+
+        .wishlist-icon.active {
+            display: block;
+        }
+        
     </style>
 </head>
 
@@ -111,6 +125,17 @@
 
     <div class="container weapons-section my-5">
         <div class="mb-4">
+        
+                        <!-- Wishlist -->
+    <h5 class="text-white">Add to Wishlist</h5>
+    <div class="mb-3">
+        <button type="button" class="btn btn-outline-light me-2 mb-2" 
+            ng-repeat="weapon in weapons" 
+            ng-click="toggleWishlist(weapon)">
+            {{weapon.name}}
+        </button>
+    </div>
+           
         <!-- Search Section -->
         <h5 class="text-white mb-3">Search Weapons</h5>
         <div class="input-group mb-3 search-bar">
@@ -156,6 +181,8 @@
         <div class="row">
             <div class="col-md-4 col-lg-3" ng-repeat="weapon in weapons | filter:searchQuery | filter:categoryFilter">
                 <div class="card">
+                    <i class="fas fa-heart wishlist-icon" 
+                    ng-class="{'active': weapon.isWishlist}"></i>
                     <div class="card bg-dark text-white h-100 border-dark">
                         <a href="{{weapon.link}}">
                             <img src="{{weapon.image}}" class="card-img-top mx-auto d-block w-100 h-100" alt="{{weapon.name}}">
@@ -187,17 +214,33 @@
 
     <script>
         angular.module('weaponsApp', []).controller('WeaponsController', ['$scope', function ($scope) {
+            const savedWishlist = JSON.parse(localStorage.getItem('wishlist')) || {};
+
             $scope.searchQuery = '';
             $scope.currentCategory = 'all';
 
             $scope.weapons = [
-                { name: "Verity's Handle", image: "/views/Images/Weapon-Images/Verity'sHandle.png", link: "/views/code/Weapons/WeaponHTML/Verity'sHandle.html", category: 'gauntlets' },
-                { name: "Lustrous Razor", image: "/views/Images/Weapon-Images/LustrousRazor.png", link: "/views/code/Weapons/WeaponHTML/LustrousRazor.html", category: 'broadblade' },
-                { name: "Blazing Brilliance", image: "/views/Images/Weapon-Images/BlazingBrilliance.png", link: "/views/code/Weapons/WeaponHTML/BlazingBrilliance.html", category: 'sword' },
-                { name: "Nova Burst", image: "/views/Images/Weapon-Images/NovaBurst.png", link: "/views/code/Weapons/WeaponHTML/NovaBurst.html", category: 'pistols' },
-                { name: "Rectifier#25", image: "/views/Images/Weapon-Images/Rectifier25.png", link: "/views/code/Weapons/WeaponHTML/Rectifier25.html", category: 'rectifier' }
+                { name: "Verity's Handle", image: "/views/Images/Weapon-Images/Verity'sHandle.png", link: "/views/code/Weapons/WeaponHTML/Verity'sHandle.html", category: 'gauntlets' , isWishlist: savedWishlist["Verity's Handle"] || false},
+                { name: "Lustrous Razor", image: "/views/Images/Weapon-Images/LustrousRazor.png", link: "/views/code/Weapons/WeaponHTML/LustrousRazor.html", category: 'broadblade', isWishlist: savedWishlist["Lustrous Razor"] || false },
+                { name: "Blazing Brilliance", image: "/views/Images/Weapon-Images/BlazingBrilliance.png", link: "/views/code/Weapons/WeaponHTML/BlazingBrilliance.html", category: 'sword', isWishlist: savedWishlist["Blazing Brilliance"] || false },
+                { name: "Nova Burst", image: "/views/Images/Weapon-Images/NovaBurst.png", link: "/views/code/Weapons/WeaponHTML/NovaBurst.html", category: 'pistols', isWishlist: savedWishlist["Nova Burst"] || false },
+                { name: "Rectifier#25", image: "/views/Images/Weapon-Images/Rectifier25.png", link: "/views/code/Weapons/WeaponHTML/Rectifier25.html", category: 'rectifier', isWishlist: savedWishlist["Rectifier#25"] || false }
             ];
 
+            $scope.toggleWishlist = function (weapon) {
+                weapon.isWishlist = !weapon.isWishlist;
+                $scope.saveWishlist();
+            };
+
+            // Save wishlist to localStorage
+            $scope.saveWishlist = function () {
+                const wishlist = {};
+                $scope.weapons.forEach(weapon => {
+                    wishlist[weapon.name] = weapon.isWishlist;
+                });
+                localStorage.setItem('wishlist', JSON.stringify(wishlist));
+            };
+            
             $scope.filterCategory = function (category) {
                 $scope.currentCategory = category;
                 $scope.categoryFilter = category === 'all' ? '' : { category: category };
