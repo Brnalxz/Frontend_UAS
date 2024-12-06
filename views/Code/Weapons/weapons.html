@@ -45,7 +45,26 @@
             background-color: #1e3c4d;
             border: none;
             border-radius: 10px;
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: column;
         }
+
+        .wishlist-icon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 24px;
+            color: red;
+            display: none;
+        }
+
+        .wishlist-icon.active {
+            display: block;
+        }
+        
     </style>
 </head>
 
@@ -106,6 +125,17 @@
 
     <div class="container weapons-section my-5">
         <div class="mb-4">
+        
+                        <!-- Wishlist -->
+    <h5 class="text-white">Add to Wishlist</h5>
+    <div class="mb-3">
+        <button type="button" class="btn btn-outline-light me-2 mb-2" 
+            ng-repeat="weapon in weapons" 
+            ng-click="toggleWishlist(weapon)">
+            {{weapon.name}}
+        </button>
+    </div>
+           
         <!-- Search Section -->
         <h5 class="text-white mb-3">Search Weapons</h5>
         <div class="input-group mb-3 search-bar">
@@ -149,13 +179,17 @@
         </div>
 
         <div class="row">
-            <div class="col-md-4 mb-4 w-25 h-25" ng-repeat="weapon in weapons | filter:searchQuery | filter:categoryFilter">
-                <div class="card bg-dark text-white h-100 border-dark">
-                    <a href="{{weapon.link}}">
-                        <img src="{{weapon.image}}" class="card-img-top mx-auto d-block w-100 h-100" alt="{{weapon.name}}">
-                    </a>
-                    <div class="card-body text-center">
-                        <h5 class="card-title">{{weapon.name}}</h5>
+            <div class="col-md-4 col-lg-3" ng-repeat="weapon in weapons | filter:searchQuery | filter:categoryFilter">
+                <div class="card">
+                    <i class="fas fa-heart wishlist-icon" 
+                    ng-class="{'active': weapon.isWishlist}"></i>
+                    <div class="card bg-dark text-white h-100 border-dark">
+                        <a href="{{weapon.link}}">
+                            <img src="{{weapon.image}}" class="card-img-top mx-auto d-block w-100 h-100" alt="{{weapon.name}}">
+                        </a>
+                        <div class="card-body text-center">
+                            <h5 class="card-title">{{weapon.name}}</h5>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -180,6 +214,8 @@
 
     <script>
         angular.module('weaponsApp', []).controller('WeaponsController', ['$scope', function ($scope) {
+            const savedWishlist = JSON.parse(localStorage.getItem('wishlist')) || {};
+
             $scope.searchQuery = '';
             $scope.currentCategory = 'all';
 
@@ -191,6 +227,20 @@
                 { name: "Rectifier#25", image: "/Images/Weapon-Images/Rectifier25.png", link: "/code/Weapons/WeaponHTML/Rectifier25.html", category: 'rectifier' }
             ];
 
+            $scope.toggleWishlist = function (weapon) {
+                weapon.isWishlist = !weapon.isWishlist;
+                $scope.saveWishlist();
+            };
+
+            // Save wishlist to localStorage
+            $scope.saveWishlist = function () {
+                const wishlist = {};
+                $scope.weapons.forEach(weapon => {
+                    wishlist[weapon.name] = weapon.isWishlist;
+                });
+                localStorage.setItem('wishlist', JSON.stringify(wishlist));
+            };
+            
             $scope.filterCategory = function (category) {
                 $scope.currentCategory = category;
                 $scope.categoryFilter = category === 'all' ? '' : { category: category };

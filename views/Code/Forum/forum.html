@@ -101,10 +101,12 @@
     <!-- Posts Section -->
     <div class="container mt-4">
         <div class="row">
+            <h1 class="text-center">All Post</h1>
             <div class="col-md-6 mb-3" ng-repeat="post in posts">
                 <div class="card bg-secondary text-white">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <div>
+                            <img ng-src="{{post.profilePic}}" class="rounded-circle me-2" width="30" alt="{{post.username}}'s profile picture">
                             <span class="fw-bold">{{post.username}}</span>
                         </div>
                         <div class="dropdown">
@@ -154,6 +156,12 @@
         app.controller('ForumController', function ($scope, $http) {
             $scope.posts = [];
             $scope.newPost = {};
+
+             $scope.posts = [
+                { username: 'ayamterbang096', profilePic: '/views/Images/Forum-Images/default-profile.png', title: 'Opinion on Xiangli Yao?', description: 'I honestly think...', likes: 121, dislikes: 14, comments: 23 },
+                { username: 'bebekhangat003', profilePic: '/views/Images/Forum-Images/default-profile.png', title: 'I Found the BEST build for Jinshi', description: 'Here\'s why...', likes: 14, dislikes: 8, comments: 5 },
+                { username: 'brbro', profilePic: '/views/Images/Forum-Images/default-profile.png', title: 'UI', description: 'Blablabla...', likes: 0, dislikes: 0, comments: 0 }
+            ];
 
             // Load posts from backend
             function loadPosts() {
